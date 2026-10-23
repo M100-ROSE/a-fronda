@@ -26,10 +26,51 @@ Regra combinada: **tudo o que for feito deve ser registrado aqui, em Markdown.**
     - `game/code/` — código do jogo (versionada com `.gitkeep`)
     - `game/arts/` — arte do jogo, subdividida em:
       - `game/arts/mapa/` — tilesets/mapas (versionada com `.gitkeep`)
-      - `game/arts/personas/` — sprites de personagens (versionada com `.gitkeep`)
+      - `game/arts/personas/` — personagens; recebe **uma pasta por personagem**
+        (versionada com `.gitkeep`), no formato:
+        - `game/arts/personas/<nome>/` — pasta do personagem (ex.: `fox/`)
+          - `<nome>-context/` — contexto/referência do personagem
+          - `<nome>-sprite/` — sprites/spritesheets e animações do personagem
+        (ver **Convenções do projeto** abaixo)
   - `inspo/` — pasta de referências visuais (por enquanto vazia, versionada com `.gitkeep`)
   - `.opencode/opencode.json` — configuração do projeto (`default_agent: bebell`)
   - `.opencode/agents/` — agentes do time (bebell, asta, anna, day, dakota)
+
+---
+
+## Convenções do projeto
+
+### Pastas de personagens
+
+Todo personagem do jogo fica em `game/arts/personas/<nome>/`.
+
+Ao criar um personagem, criar dentro da pasta dele **duas subpastas**:
+
+- `game/arts/personas/<nome>/<nome>-context/`
+- `game/arts/personas/<nome>/<nome>-sprite/`
+
+Regra do `<nome>`: nome do personagem em **minúsculas**, **sem acentos** e **sem
+espaços**; se o nome tiver mais de uma palavra, usar hífen.
+
+Exemplo com o personagem "fox":
+
+```
+game/arts/personas/fox/
+  fox-context/
+  fox-sprite/
+```
+
+Papel de cada pasta:
+
+- `<nome>-context` — material de contexto/referência do personagem (descrição,
+  referências, prompts, decisões).
+- `<nome>-sprite` — sprites/spritesheets e animações geradas do personagem.
+
+Esta convenção vale para **todo** personagem criado a partir de agora, sem precisar
+ser reafirmada a cada pedido.
+
+Se as pastas forem criadas vazias, usar `.gitkeep` para o Git versionar (mesma
+prática do resto do projeto).
 
 ---
 
@@ -274,6 +315,32 @@ Pendências:
 - [ ] Preencher `game/arts/mapa` com os tilesets/mapas.
 - [ ] Preencher `game/arts/personas` com os sprites de personagens.
 - [ ] Preencher `inspo/` com as referências visuais do projeto.
+
+---
+
+### 2026-10-22 — Convenção de pastas para personagens
+
+Solicitação: toda vez que for pedido para criar um personagem, criar dentro da pasta
+dele a pasta `<nome>-context` e a pasta `<nome>-sprite`.
+
+O que foi feito:
+
+1. Definida a convenção de pastas para personagens na nova seção
+   **Convenções do projeto**: `game/arts/personas/<nome>/` com as subpastas
+   `<nome>-context/` e `<nome>-sprite/`; `<nome>` em minúsculas, sem acentos e sem
+   espaços (hífen se tiver mais de uma palavra).
+2. Confirmado com o usuário o formato `fox/fox-context` e `fox/fox-sprite`
+   (`game/arts/personas/fox/fox-context/` e `game/arts/personas/fox/fox-sprite/`).
+3. Nenhuma pasta de personagem criada nesta tarefa — fica aguardando o primeiro
+   personagem.
+
+Arquivos alterados:
+
+- `contexto.md` — nova seção **Convenções do projeto** e esta entrada
+
+Pendências:
+
+- [ ] Criar o primeiro personagem seguindo a convenção, quando o usuário pedir.
 
 ---
 
