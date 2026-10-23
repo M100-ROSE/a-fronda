@@ -123,7 +123,8 @@ O que foi feito:
    - Autenticação: Gerenciador de Credenciais do Windows (`credential.helper = manager`),
      acesso confirmado com `git ls-remote origin`.
 2. Adicionada a regra de Git em **Preferências de trabalho**.
-3. Criado o primeiro commit deste projeto com o `contexto.md` e enviado para `origin/main`.
+3. Criado o primeiro commit deste projeto com o `contexto.md` e enviado para `origin/main`
+   — push confirmado: `8e1f501..e3388af  main -> main`.
 
 Arquivos alterados:
 
