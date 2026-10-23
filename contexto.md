@@ -8,8 +8,9 @@ Projeto: um jogo com arte em **pixel art** no idioma técnico do **Stardew
 Valley** (vista 3/4, silhueta legível, contorno de 1 px, tiles com
 personalidade, idle vivo) — sem copiar o aconchego seguro da fazenda.
 Sensações oficiais da arte: [`inspo/briefing.md`](inspo/briefing.md). Cores:
-[`inspo/paleta.md`](inspo/paleta.md). Engine, plataforma e mecânicas ainda não
-foram definidas.
+[`inspo/paleta.md`](inspo/paleta.md). Links de referência (pixel Stardew,
+medieval, retratos): [`inspo/visual.md`](inspo/visual.md). Engine, plataforma e
+mecânicas ainda não foram definidas.
 
 ---
 
@@ -93,6 +94,10 @@ foram definidas.
 - **Briefing de sensação:** a fonte da verdade do que cada arte deve **fazer
   sentir** é `inspo/briefing.md` (personagens, vilas, áreas, estilo Stardew
   Valley). Sprite e tileset leem briefing + paleta + ficha JSON.
+- **Referências visuais (links):** `inspo/visual.md` guarda URLs de pixel art
+  (Stardew Valley, medieval/castelo) e retratos dos 46 personagens. Serve na
+  hora de gerar sprite/mapa. Arte comercial é inspiração de linguagem, não
+  cópia de pixel.
 - **Personagens já cadastrados:** 46 fichas em `game/arts/personas/` — **23** de
   `ideal` `oposicao` e **23** de `ideal` `reino` (lista completa no `historico.md`).
 
@@ -168,3 +173,4 @@ explícito do usuário.
 | `inspo/` | Referências visuais e materiais de inspiração. |
 | `inspo/paleta.md` | Paletas oficiais do jogo (vilas, ambientes, personagens P&B, login). |
 | `inspo/briefing.md` | Sensações da arte: estilo Stardew Valley, vilas, castelo do Rei César, cada personagem. |
+| `inspo/visual.md` | Links de inspiração: pixel Stardew/medieval, retratos e objetos-âncora para sprites e mapas. |

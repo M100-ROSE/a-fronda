@@ -607,6 +607,44 @@ Pendências:
 
 ---
 
+### 2026-10-23 — Pasta de referências visuais (`inspo/visual.md`)
+
+Solicitação: criar `inspo/visual.md` com links de imagens de pixel art medieval,
+do estilo Stardew Valley, fotos dos personagens e o que mais for necessário
+para inspirar sprites de mapas e de personagens.
+
+O que foi feito:
+
+1. Pesquisa de páginas reais (wiki do Stardew Valley, Steam/press kits, Wikimedia
+   Commons, Wikipédia, Lospec, tileset CC0), com data de acesso 23 out 2026.
+2. Criado `inspo/visual.md` com:
+   - **Stardew:** Pelican Town, interiores, Mayor's Manor, Wizard's Tower,
+     Adventurer's Guild, retratos/sprites de NPC (Lewis, Abigail, sprite sheet).
+   - **Medieval / castelo:** Kingdom Two Crowns, Graveyard Keeper, Blasphemous,
+     Eastward, tileset CC0 de vila, preview itch.io, Lospec.
+   - **Mapeamento** vila revolucionária × vila do reino × Castelo do Rei César.
+   - **46 personagens:** Wikipédia + busca Commons; arquivos `File:` conferidos
+     para Che (Korda), Che+Fidel, Rosa Parks 1955, galerias de Marx, Mandela,
+     Thatcher, Churchill 1940, etc.
+   - Extra de figurino (kente, roca, tweed, muralha, tijolo).
+   - Aviso de licença: jogo comercial = linguagem, não cópia; Commons = ler a
+     página do arquivo.
+3. Atualizados `contexto.md` (regra + tabela) e este histórico.
+
+Arquivos alterados:
+
+- `inspo/visual.md` — criado
+- `contexto.md` — referência visual na abertura, regra e tabela
+- `historico.md` — esta entrada
+
+Pendências:
+
+- [ ] Usar `visual.md` + briefing + paleta no primeiro lote de sprites/tilesets.
+- [ ] Completar `File:` direto no Commons para personagens que hoje só têm busca
+      (Marighella, Lamarca, Iara, etc.) quando o sprite for gerado.
+
+---
+
 ## Modelo para novas entradas
 
 ```markdown
