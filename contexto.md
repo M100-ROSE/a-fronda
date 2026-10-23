@@ -11,6 +11,7 @@ Regra combinada: **tudo o que for feito deve ser registrado aqui, em Markdown.**
 - **Registro:** toda alteração, instalação, decisão ou tarefa executada deve ser anotada neste arquivo (`contexto.md`).
 - **Formato:** Markdown, com seções por data/assunto e histórico em ordem cronológica.
 - **Git:** toda atualização deve ser commitada e enviada para o GitHub (`origin`, branch `main`) na mesma tarefa.
+- **Regra fixa (reforçada em 2026-10-22 pelo usuário):** toda e qualquer alteração feita no projeto — arquivos, pastas, configurações, agentes, assets — deve ser registrada no `contexto.md` como uma nova entrada de histórico e, na MESMA tarefa, commitada e enviada para o GitHub (`git push origin main`). Nenhuma tarefa é considerada concluída antes disso.
 
 ---
 
@@ -212,6 +213,29 @@ Pendências:
 
 - [ ] Preencher `game/` com o conteúdo do jogo/projeto (estrutura ainda não definida).
 - [ ] Preencher `inspo/` com as referências visuais do projeto.
+
+---
+
+### 2026-10-22 — Regra fixa: registrar no contexto e publicar no GitHub
+
+Solicitação: "sempre grave as alterações no contexto e suba ao github".
+
+O que foi feito:
+
+1. Reforçada a regra na seção **Preferências de trabalho**, como item explícito e
+   inequívoco: toda alteração no projeto (arquivos, pastas, configurações, agentes,
+   assets) deve gerar uma nova entrada de histórico neste arquivo e, na mesma tarefa,
+   commit e `git push origin main`. Nenhuma tarefa é considerada concluída antes disso.
+2. Registrada esta entrada no histórico, seguida de commit e envio para `origin/main`.
+
+Arquivos alterados:
+
+- `contexto.md` — regra fixa reforçada nas preferências e nova entrada de histórico
+
+Pendências:
+
+- Nenhuma pendência nova. Observação: a regra passa a valer para todas as tarefas
+  futuras, sem exceção.
 
 ---
 
