@@ -1,7 +1,7 @@
 ---
 description: Responsável por fechar cada tarefa. Organiza o que foi feito, atualiza o contexto.md, revisa o diff, commita e envia para o GitHub. Sempre chamado ao final de um pedido.
 mode: subagent
-color: "#00838f"
+color: "#510069"
 permissions:
   - action: subagent
     resource: "*"

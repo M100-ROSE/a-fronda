@@ -181,9 +181,8 @@ Pendências:
 - [ ] Reiniciar o OpenCode / abrir uma nova sessão para a Bebell assumir como agente padrão.
 - [ ] Testar o fluxo completo com um pedido real (Bebell → Asta/Anna/Day → Dakota).
 
-Observação: durante a validação, o OpenCode reescreveu o campo `color` de dois agentes
-(`bebell` e `dakota`) no arquivo. As cores foram restauradas para as definidas aqui;
-se voltar a acontecer, é apenas estético e não afeta o funcionamento.
+Observação: as cores dos agentes são definidas/ajustadas pelo próprio OpenCode e são
+mantidas como estão — é apenas estético e não afeta o funcionamento.
 
 ---
 
