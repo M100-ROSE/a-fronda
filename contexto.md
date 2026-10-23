@@ -21,6 +21,8 @@ Regra combinada: **tudo o que for feito deve ser registrado aqui, em Markdown.**
 - Estrutura:
   - `README.md`
   - `contexto.md` — este arquivo
+  - `game/` — pasta do jogo/projeto (por enquanto vazia, versionada com `.gitkeep`)
+  - `inspo/` — pasta de referências visuais (por enquanto vazia, versionada com `.gitkeep`)
   - `.opencode/opencode.json` — configuração do projeto (`default_agent: bebell`)
   - `.opencode/agents/` — agentes do time (bebell, asta, anna, day, dakota)
 
@@ -183,6 +185,33 @@ Pendências:
 
 Observação: as cores dos agentes são definidas/ajustadas pelo próprio OpenCode e são
 mantidas como estão — é apenas estético e não afeta o funcionamento.
+
+---
+
+### 2026-10-22 — Criação das pastas game e inspo
+
+Solicitação: criar duas pastas na raiz do repositório — `game` (para o jogo/projeto) e
+`inspo` (para referências visuais) — e registrar/commitar a tarefa no Git.
+
+O que foi feito:
+
+1. Criada a pasta `game/` na raiz do repositório.
+2. Criada a pasta `inspo/` na raiz do repositório.
+3. Como o Git não versiona diretórios vazios, adicionado um arquivo `.gitkeep`
+   (vazio, 0 bytes) dentro de cada pasta, para que ambas apareçam no repositório.
+4. Atualizada a seção **Estado atual do repositório** com as duas novas pastas.
+5. Registrada esta entrada no histórico, seguida de commit e `git push origin main`.
+
+Arquivos alterados:
+
+- `game/.gitkeep` — criado (arquivo vazio, mantém a pasta no versionamento)
+- `inspo/.gitkeep` — criado (arquivo vazio, mantém a pasta no versionamento)
+- `contexto.md` — nova entrada no histórico e estrutura do repositório atualizada
+
+Pendências:
+
+- [ ] Preencher `game/` com o conteúdo do jogo/projeto (estrutura ainda não definida).
+- [ ] Preencher `inspo/` com as referências visuais do projeto.
 
 ---
 
