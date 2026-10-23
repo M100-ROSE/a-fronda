@@ -7,7 +7,7 @@ diz o que a arte precisa **fazer o jogador sentir**, não a biografia.
 Toda arte (sprite, tileset, interior, UI de mapa) deve ser lida contra estas três
 perguntas:
 
-1. Que lado político isto pertence (`oposicao` ou `reino`)?
+1. Que lado político isto pertence (`oposicao` ou `reino`)? 
 2. Que sentimento fica depois de dois segundos de tela?
 3. Isto ainda parece pixel art no idioma do Stardew Valley (técnica), sem copiar o
    aconchego seguro da fazenda?
