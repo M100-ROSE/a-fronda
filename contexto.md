@@ -17,8 +17,12 @@ Regra combinada: **tudo o que for feito deve ser registrado aqui, em Markdown.**
 ## Estado atual do repositório
 
 - Diretório: `C:\Users\kaike\Documents\a-fronda`
-- Repositório Git: sim
-- Conteúdo antes das alterações: apenas `README.md` (título `# a-fronda`)
+- Repositório Git: sim — `https://github.com/M100-ROSE/a-fronda.git` (branch `main`)
+- Estrutura:
+  - `README.md`
+  - `contexto.md` — este arquivo
+  - `.opencode/opencode.json` — configuração do projeto (`default_agent: bebell`)
+  - `.opencode/agents/` — agentes do time (bebell, asta, anna, day, dakota)
 
 ---
 
@@ -134,6 +138,48 @@ Pendências:
 
 - [ ] Definir identidade do Git (`user.name` / `user.email`) — hoje estão como
       `Your Name <you@example.com>`, então os commits não ficam vinculados à conta do GitHub.
+
+---
+
+### 2026-10-22 — Criação do time de agentes (Bebell, Asta, Anna, Day e Dakota)
+
+Solicitação: criar um agente chamado **Bebell** que recebe os pedidos do usuário e os
+distribui para os subagentes — **Asta** (back-end, calma e sem estresse, paciente com a
+Anna), **Anna** (front-end), **Day** (design, o mais fiel possível à referência) e
+**Dakota** (organiza o que foi feito, sobe para o Git e atualiza o contexto).
+
+O que foi feito:
+
+1. Criados 5 agentes em Markdown (formato V2) em `.opencode/agents/`:
+   - `bebell.md` — `primary`, orquestrador. Só lê e inspeciona; não edita nem roda
+     comandos. Delega apenas para `asta`, `anna`, `day` e `dakota`.
+   - `asta.md` — `subagent` de back-end. Postura calma, sem estresse, paciente na
+     negociação de contratos de API com a Anna.
+   - `anna.md` — `subagent` de front-end. Fiel ao design da Day e integrada ao
+     contrato da Asta.
+   - `day.md` — `subagent` de design. Extrai medidas/tokens da referência e entrega
+     especificação implementável, registrando qualquer desvio.
+   - `dakota.md` — `subagent` de fechamento. Revisa o diff, atualiza o `contexto.md`,
+     commita e faz `git push origin main`.
+2. Definido `default_agent: bebell` na configuração do projeto
+   (`.opencode/opencode.json`), para que novas sessões já comecem com a Bebell.
+3. Validada a descoberta dos agentes pela API (`GET /api/agent`): os 5 aparecem com
+   modo e cor corretos.
+
+Arquivos alterados:
+
+- `.opencode/agents/bebell.md` — criado
+- `.opencode/agents/asta.md` — criado
+- `.opencode/agents/anna.md` — criado
+- `.opencode/agents/day.md` — criado
+- `.opencode/agents/dakota.md` — criado
+- `.opencode/opencode.json` — criado com `default_agent: bebell`
+- `contexto.md` — esta entrada e atualização da estrutura do projeto
+
+Pendências:
+
+- [ ] Reiniciar o OpenCode / abrir uma nova sessão para a Bebell assumir como agente padrão.
+- [ ] Testar o fluxo completo com um pedido real (Bebell → Asta/Anna/Day → Dakota).
 
 ---
 
