@@ -1,365 +1,68 @@
 # Contexto do Projeto — a-fronda
 
-Este arquivo registra o histórico de decisões, configurações e tarefas deste projeto.
-Regra combinada: **tudo o que for feito deve ser registrado aqui, em Markdown.**
+Este arquivo contém **apenas** as regras de negócio/convenções do projeto e a
+explicação dos arquivos e pastas. O registro cronológico de tudo que foi feito fica
+em [`historico.md`](historico.md).
+
+Projeto: um jogo com arte em **pixel art**. Engine, plataforma e mecânicas ainda não
+foram definidas.
 
 ---
 
-## Preferências de trabalho
+## Regras de negócio e do projeto
 
-- **Idioma:** responder sempre em português do Brasil.
-- **Registro:** toda alteração, instalação, decisão ou tarefa executada deve ser anotada neste arquivo (`contexto.md`).
-- **Formato:** Markdown, com seções por data/assunto e histórico em ordem cronológica.
-- **Git:** toda atualização deve ser commitada e enviada para o GitHub (`origin`, branch `main`) na mesma tarefa.
-- **Regra fixa (reforçada em 2026-10-22 pelo usuário):** toda e qualquer alteração feita no projeto — arquivos, pastas, configurações, agentes, assets — deve ser registrada no `contexto.md` como uma nova entrada de histórico e, na MESMA tarefa, commitada e enviada para o GitHub (`git push origin main`). Nenhuma tarefa é considerada concluída antes disso.
+- **Idioma:** trabalhar e responder sempre em **português do Brasil**.
+- **Registro obrigatório:** toda alteração no projeto (arquivos, pastas,
+  configurações, agentes, assets) deve ser registrada em `historico.md` como uma nova
+  entrada e, **na mesma tarefa**, commitada e enviada para `origin/main`
+  (`git push origin main`). Nenhuma tarefa é considerada concluída antes disso.
+- **Versionamento:** pastas vazias recebem um arquivo `.gitkeep` (vazio) para que o Git
+  versione o diretório.
+- **Convenção de pastas de personagens:** todo personagem fica em
+  `game/arts/personas/<nome>/`, com duas subpastas:
+  - `<nome>-context/` — contexto/referência do personagem (descrição, referências,
+    prompts, decisões);
+  - `<nome>-sprite/` — sprites/spritesheets e animações geradas do personagem.
 
----
+  Regra do `<nome>`: **minúsculas**, **sem acentos** e **sem espaços**; se tiver mais
+  de uma palavra, usar hífen. Exemplo: `game/arts/personas/fox/fox-context/` e
+  `game/arts/personas/fox/fox-sprite/`. Vale para todo personagem criado a partir de
+  agora, sem precisar ser reafirmada a cada pedido.
+- **Arte:** gerada com o **SpriteCook** (MCP já instalado no ambiente) — conta free,
+  **40 créditos/mês**, assets com **uso comercial permitido**. Assets gerados vão para
+  dentro de `game/arts/`: mapas em `game/arts/mapa/`, personagens em
+  `game/arts/personas/<nome>/<nome>-sprite/`.
+- **Time de agentes:**
+  - **Bebell** — agente líder; recebe o pedido do usuário e delega.
+  - **Asta** — back-end.
+  - **Anna** — front-end.
+  - **Day** — design.
+  - **Dakota** — fechamento: registra no `historico.md`, commita e faz o push.
 
-## Estado atual do repositório
+## Regras de negócio do jogo
 
-- Diretório: `C:\Users\kaike\Documents\a-fronda`
-- Repositório Git: sim — `https://github.com/M100-ROSE/a-fronda.git` (branch `main`)
-- Estrutura:
-  - `README.md`
-  - `contexto.md` — este arquivo
-  - `game/` — pasta do jogo/projeto, organizada em:
-    - `game/code/` — código do jogo (versionada com `.gitkeep`)
-    - `game/arts/` — arte do jogo, subdividida em:
-      - `game/arts/mapa/` — tilesets/mapas (versionada com `.gitkeep`)
-      - `game/arts/personas/` — personagens; recebe **uma pasta por personagem**
-        (versionada com `.gitkeep`), no formato:
-        - `game/arts/personas/<nome>/` — pasta do personagem (ex.: `fox/`)
-          - `<nome>-context/` — contexto/referência do personagem
-          - `<nome>-sprite/` — sprites/spritesheets e animações do personagem
-        (ver **Convenções do projeto** abaixo)
-  - `inspo/` — pasta de referências visuais (por enquanto vazia, versionada com `.gitkeep`)
-  - `.opencode/opencode.json` — configuração do projeto (`default_agent: bebell`)
-  - `.opencode/agents/` — agentes do time (bebell, asta, anna, day, dakota)
-
----
-
-## Convenções do projeto
-
-### Pastas de personagens
-
-Todo personagem do jogo fica em `game/arts/personas/<nome>/`.
-
-Ao criar um personagem, criar dentro da pasta dele **duas subpastas**:
-
-- `game/arts/personas/<nome>/<nome>-context/`
-- `game/arts/personas/<nome>/<nome>-sprite/`
-
-Regra do `<nome>`: nome do personagem em **minúsculas**, **sem acentos** e **sem
-espaços**; se o nome tiver mais de uma palavra, usar hífen.
-
-Exemplo com o personagem "fox":
-
-```
-game/arts/personas/fox/
-  fox-context/
-  fox-sprite/
-```
-
-Papel de cada pasta:
-
-- `<nome>-context` — material de contexto/referência do personagem (descrição,
-  referências, prompts, decisões).
-- `<nome>-sprite` — sprites/spritesheets e animações geradas do personagem.
-
-Esta convenção vale para **todo** personagem criado a partir de agora, sem precisar
-ser reafirmada a cada pedido.
-
-Se as pastas forem criadas vazias, usar `.gitkeep` para o Git versionar (mesma
-prática do resto do projeto).
+**Ainda não definidas.** Até agora nenhuma mecânica, regra de gameplay, progressão ou
+balanceamento foi especificada. Nada deve ser inventado nesta seção sem pedido
+explícito do usuário.
 
 ---
 
-## Histórico
-
-### 2026-10-22 — Instalação do SpriteCook (MCP + skills)
-
-Solicitação: adicionar o SpriteCook ao ambiente.
-
-O que foi feito:
-
-1. Baixado e revisado o instalador oficial para Windows
-   (`https://spritecook.ai/install-opencode.ps1`) antes de executá-lo.
-2. Executado o instalador oficial, que realizou:
-   - Criação do arquivo de configuração global `C:\Users\kaike\.config\opencode\opencode.json`
-     com o servidor MCP remoto:
-     ```json
-     {
-       "$schema": "https://opencode.ai/config.json",
-       "mcp": {
-         "spritecook": {
-           "type": "remote",
-           "url": "https://mcp.spritecook.ai/mcp/openai",
-           "enabled": true
-         }
-       }
-     }
-     ```
-   - Cópia de 10 skills de workflow do SpriteCook para
-     `C:\Users\kaike\.config\opencode\skills`:
-     - `spritecook-workflow-essentials`
-     - `spritecook-generate-sprites`
-     - `spritecook-animate-assets`
-     - `spritecook-generate-tilesets`
-     - `spritecook-use-dual-grid-tilesets`
-     - `spritecook-build-ui-kits`
-     - `spritecook-polish-sprites`
-     - `spritecook-upload-assets`
-     - `spritecook-use-presets`
-     - `spritecook-use-assets-in-godot`
-
-3. Após reiniciar o OpenCode, as ferramentas MCP do SpriteCook foram carregadas
-   (44 ferramentas, entre elas `generate_game_art`, `animate_game_art`,
-   `generate_tileset`, `remove_background`, `list_recent_assets`,
-   `get_credit_balance`).
-
-4. Validada a conexão chamando `get_credit_balance` — o OAuth já estava ativo
-   (nenhum login manual extra foi necessário):
-   - Conta: `unaware_retired_timid` (`k***@gmail.com`)
-   - Plano: `free`, assinatura ativa
-   - Créditos: **40 de 40**
-   - Jobs simultâneos: 1
-   - Versão mais recente das skills: `2026.10.20`
-
-Observações importantes:
-
-- **Não é necessário API key.** A autenticação é via OAuth no navegador,
-  na primeira utilização de uma ferramenta protegida, vinculada à conta SpriteCook.
-- A conta gratuita inclui 40 créditos por mês.
-- Os assets gerados podem ser usados comercialmente.
-
-Arquivos alterados:
-
-- `C:\Users\kaike\.config\opencode\opencode.json` — criado com o servidor MCP `spritecook`
-- `C:\Users\kaike\.config\opencode\skills\*` — 10 skills do SpriteCook instaladas
-
-Pendências:
-
-- [ ] Definir o primeiro asset a ser gerado para o projeto a-fronda.
-- [ ] Escolher o diretório onde os assets gerados serão salvos.
-
----
-
-### 2026-10-22 — Criação deste arquivo de contexto
-
-Solicitação: responder em português do Brasil e registrar todas as ações em
-`contexto.md` (Markdown).
-
-O que foi feito:
-
-1. Criado este arquivo `contexto.md` na raiz do projeto.
-2. Registrado o histórico completo da instalação do SpriteCook.
-3. Definida a estrutura de registro (seções, histórico, modelo de nova entrada).
-
-Arquivos alterados:
-
-- `contexto.md` — criado
-
-Pendências:
-
-- [ ] Manter este arquivo atualizado a cada nova tarefa.
-
-### 2026-10-22 — Publicação no GitHub a cada atualização
-
-Solicitação: sempre que houver uma atualização, enviá-la para o GitHub.
-
-O que foi feito:
-
-1. Verificado o repositório remoto já configurado:
-   - `origin` → `https://github.com/M100-ROSE/a-fronda.git`
-   - Branch local/remota: `main`
-   - Autenticação: Gerenciador de Credenciais do Windows (`credential.helper = manager`),
-     acesso confirmado com `git ls-remote origin`.
-2. Adicionada a regra de Git em **Preferências de trabalho**.
-3. Criado o primeiro commit deste projeto com o `contexto.md` e enviado para `origin/main`
-   — push confirmado: `8e1f501..e3388af  main -> main`.
-
-Arquivos alterados:
-
-- `contexto.md` — nova regra e este registro
-
-Pendências:
-
-- [ ] Definir identidade do Git (`user.name` / `user.email`) — hoje estão como
-      `Your Name <you@example.com>`, então os commits não ficam vinculados à conta do GitHub.
-
----
-
-### 2026-10-22 — Criação do time de agentes (Bebell, Asta, Anna, Day e Dakota)
-
-Solicitação: criar um agente chamado **Bebell** que recebe os pedidos do usuário e os
-distribui para os subagentes — **Asta** (back-end, calma e sem estresse, paciente com a
-Anna), **Anna** (front-end), **Day** (design, o mais fiel possível à referência) e
-**Dakota** (organiza o que foi feito, sobe para o Git e atualiza o contexto).
-
-O que foi feito:
-
-1. Criados 5 agentes em Markdown (formato V2) em `.opencode/agents/`:
-   - `bebell.md` — `primary`, orquestrador. Só lê e inspeciona; não edita nem roda
-     comandos. Delega apenas para `asta`, `anna`, `day` e `dakota`.
-   - `asta.md` — `subagent` de back-end. Postura calma, sem estresse, paciente na
-     negociação de contratos de API com a Anna.
-   - `anna.md` — `subagent` de front-end. Fiel ao design da Day e integrada ao
-     contrato da Asta.
-   - `day.md` — `subagent` de design. Extrai medidas/tokens da referência e entrega
-     especificação implementável, registrando qualquer desvio.
-   - `dakota.md` — `subagent` de fechamento. Revisa o diff, atualiza o `contexto.md`,
-     commita e faz `git push origin main`.
-2. Definido `default_agent: bebell` na configuração do projeto
-   (`.opencode/opencode.json`), para que novas sessões já comecem com a Bebell.
-3. Validada a descoberta dos agentes pela API (`GET /api/agent`): os 5 aparecem com
-   modo e cor corretos.
-
-Arquivos alterados:
-
-- `.opencode/agents/bebell.md` — criado
-- `.opencode/agents/asta.md` — criado
-- `.opencode/agents/anna.md` — criado
-- `.opencode/agents/day.md` — criado
-- `.opencode/agents/dakota.md` — criado
-- `.opencode/opencode.json` — criado com `default_agent: bebell`
-- `contexto.md` — esta entrada e atualização da estrutura do projeto
-
-Pendências:
-
-- [ ] Reiniciar o OpenCode / abrir uma nova sessão para a Bebell assumir como agente padrão.
-- [ ] Testar o fluxo completo com um pedido real (Bebell → Asta/Anna/Day → Dakota).
-
-Observação: as cores dos agentes são definidas/ajustadas pelo próprio OpenCode e são
-mantidas como estão — é apenas estético e não afeta o funcionamento.
-
----
-
-### 2026-10-22 — Criação das pastas game e inspo
-
-Solicitação: criar duas pastas na raiz do repositório — `game` (para o jogo/projeto) e
-`inspo` (para referências visuais) — e registrar/commitar a tarefa no Git.
-
-O que foi feito:
-
-1. Criada a pasta `game/` na raiz do repositório.
-2. Criada a pasta `inspo/` na raiz do repositório.
-3. Como o Git não versiona diretórios vazios, adicionado um arquivo `.gitkeep`
-   (vazio, 0 bytes) dentro de cada pasta, para que ambas apareçam no repositório.
-4. Atualizada a seção **Estado atual do repositório** com as duas novas pastas.
-5. Registrada esta entrada no histórico, seguida de commit e `git push origin main`.
-
-Arquivos alterados:
-
-- `game/.gitkeep` — criado (arquivo vazio, mantém a pasta no versionamento)
-- `inspo/.gitkeep` — criado (arquivo vazio, mantém a pasta no versionamento)
-- `contexto.md` — nova entrada no histórico e estrutura do repositório atualizada
-
-Pendências:
-
-- [ ] Preencher `game/` com o conteúdo do jogo/projeto (estrutura ainda não definida).
-- [ ] Preencher `inspo/` com as referências visuais do projeto.
-
----
-
-### 2026-10-22 — Regra fixa: registrar no contexto e publicar no GitHub
-
-Solicitação: "sempre grave as alterações no contexto e suba ao github".
-
-O que foi feito:
-
-1. Reforçada a regra na seção **Preferências de trabalho**, como item explícito e
-   inequívoco: toda alteração no projeto (arquivos, pastas, configurações, agentes,
-   assets) deve gerar uma nova entrada de histórico neste arquivo e, na mesma tarefa,
-   commit e `git push origin main`. Nenhuma tarefa é considerada concluída antes disso.
-2. Registrada esta entrada no histórico, seguida de commit e envio para `origin/main`.
-
-Arquivos alterados:
-
-- `contexto.md` — regra fixa reforçada nas preferências e nova entrada de histórico
-
-Pendências:
-
-- Nenhuma pendência nova. Observação: a regra passa a valer para todas as tarefas
-  futuras, sem exceção.
-
----
-
-### 2026-10-22 — Estrutura de pastas do jogo (code e arts)
-
-Solicitação: criar a pasta `code` e a pasta `arts` dentro de `game`, e dentro de `arts`
-criar as pastas `mapa` e `personas`.
-
-O que foi feito:
-
-1. Criada a pasta `game/code/`.
-2. Criada a pasta `game/arts/` com as subpastas `game/arts/mapa/` e `game/arts/personas/`.
-3. Como o Git não versiona diretórios vazios, adicionado um arquivo `.gitkeep`
-   (vazio, 0 bytes) em cada pasta nova — `game/code`, `game/arts/mapa` e
-   `game/arts/personas`. O `game/.gitkeep` existente foi mantido como está.
-4. Definida a convenção de organização: `game/code` guarda o código do jogo;
-   `game/arts` guarda a arte, com `mapa` para tilesets/mapas e `personas` para
-   personagens.
-5. Atualizada a seção **Estado atual do repositório** com a nova árvore de pastas.
-6. Registrada esta entrada no histórico, seguida de commit e `git push origin main`.
-
-Arquivos alterados:
-
-- `game/code/.gitkeep` — criado (arquivo vazio, mantém a pasta no versionamento)
-- `game/arts/mapa/.gitkeep` — criado (arquivo vazio, mantém a pasta no versionamento)
-- `game/arts/personas/.gitkeep` — criado (arquivo vazio, mantém a pasta no versionamento)
-- `contexto.md` — nova entrada no histórico e estrutura do repositório atualizada
-
-Pendências:
-
-- [ ] Preencher `game/code` com a base do código do jogo.
-- [ ] Preencher `game/arts/mapa` com os tilesets/mapas.
-- [ ] Preencher `game/arts/personas` com os sprites de personagens.
-- [ ] Preencher `inspo/` com as referências visuais do projeto.
-
----
-
-### 2026-10-22 — Convenção de pastas para personagens
-
-Solicitação: toda vez que for pedido para criar um personagem, criar dentro da pasta
-dele a pasta `<nome>-context` e a pasta `<nome>-sprite`.
-
-O que foi feito:
-
-1. Definida a convenção de pastas para personagens na nova seção
-   **Convenções do projeto**: `game/arts/personas/<nome>/` com as subpastas
-   `<nome>-context/` e `<nome>-sprite/`; `<nome>` em minúsculas, sem acentos e sem
-   espaços (hífen se tiver mais de uma palavra).
-2. Confirmado com o usuário o formato `fox/fox-context` e `fox/fox-sprite`
-   (`game/arts/personas/fox/fox-context/` e `game/arts/personas/fox/fox-sprite/`).
-3. Nenhuma pasta de personagem criada nesta tarefa — fica aguardando o primeiro
-   personagem.
-
-Arquivos alterados:
-
-- `contexto.md` — nova seção **Convenções do projeto** e esta entrada
-
-Pendências:
-
-- [ ] Criar o primeiro personagem seguindo a convenção, quando o usuário pedir.
-
----
-
-## Modelo para novas entradas
-
-```markdown
-### AAAA-MM-DD — Título curto da tarefa
-
-Solicitação: ...
-
-O que foi feito:
-
-1. ...
-
-Arquivos alterados:
-
-- `caminho/arquivo` — descrição da mudança
-
-Pendências:
-
-- [ ] ...
-```
+## Explicação dos arquivos e pastas
+
+| Caminho | O que é / quem usa |
+| --- | --- |
+| `README.md` | Descrição curta do projeto. |
+| `contexto.md` | Este arquivo: regras de negócio/convenções + mapa de arquivos e pastas. |
+| `historico.md` | Registro cronológico de todas as tarefas do projeto (entrada por tarefa). |
+| `.opencode/opencode.json` | Configuração do projeto (`default_agent: bebell`). |
+| `.opencode/agents/bebell.md` | Agente líder: recebe o pedido e delega aos subagentes. |
+| `.opencode/agents/asta.md` | Subagente de back-end. |
+| `.opencode/agents/anna.md` | Subagente de front-end. |
+| `.opencode/agents/day.md` | Subagente de design. |
+| `.opencode/agents/dakota.md` | Subagente de fechamento (histórico, commit, push). |
+| `game/` | Raiz do jogo. |
+| `game/code/` | Código do jogo. |
+| `game/arts/` | Arte do jogo. |
+| `game/arts/mapa/` | Tilesets e mapas. |
+| `game/arts/personas/` | Um diretório por personagem, no formato da convenção acima. |
+| `inspo/` | Referências visuais e materiais de inspiração. |
