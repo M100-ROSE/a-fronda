@@ -563,6 +563,50 @@ Pendências:
 
 ---
 
+### 2026-10-23 — Briefing de sensações da arte (`inspo/briefing.md`)
+
+Solicitação: criar `inspo/briefing.md` com as sensações que as artes de cada
+personagem devem passar, o que as vilas devem passar, o estilo de pixel art
+como o de Stardew Valley, e as áreas — em especial o **castelo do Rei César**,
+apoiado pelo lado `reino`, com sentimento de perigo, de não estar seguro e de
+prisão psicológica.
+
+O que foi feito:
+
+1. Cruzadas as 46 fichas JSON (visual, ideais, personalidade), `inspo/paleta.md`
+   e a divisão política do mundo.
+2. Criado `inspo/briefing.md` como fonte da verdade de **sensação** (não de
+   biografia nem de hex):
+   - **Estilo:** gramática do Stardew Valley (vista 3/4, silhueta, contorno
+     1 px, idle vivo, tiles com personalidade, luz de hora do dia) **sem** o
+     aconchego da fazenda, sem chibi, sem neon.
+   - **Vila revolucionária:** calor, urgência, clandestinidade, dignidade pobre.
+   - **Vila direita:** ordem, hierarquia, frieza educada; bela, mas não é o
+     castelo.
+   - **Castelo do Rei César:** área nova, apoiada pelo `reino`. Perigo
+     institucional, insegurança (nenhum canto é save/abrigo) e prisão
+     psicológica (etiqueta, retratos, corredores repetidos, ouro como grade).
+     Sem biografia inventada do rei — ele é pressão espacial.
+   - **46 personagens:** uma entrada cada, com sensação dominante e como a arte
+     entrega (objeto-âncora, pose, luz).
+3. Atualizado o `contexto.md`: estilo Stardew na abertura, regra do briefing,
+   seção **Lugares do mundo (arte)** e linha na tabela de arquivos.
+
+Arquivos alterados:
+
+- `inspo/briefing.md` — criado
+- `contexto.md` — briefing, lugares do mundo, estilo de arte
+- `historico.md` — esta entrada
+
+Pendências:
+
+- [ ] Aplicar o briefing + paleta nos tilesets (`game/arts/mapa/`), inclusive o
+      castelo do Rei César.
+- [ ] Aplicar o briefing nos sprites (`game/arts/personas/<slug>/<slug>-sprite/`).
+- [ ] Ficha do Rei César só quando o usuário pedir (biografia ainda indefinida).
+
+---
+
 ## Modelo para novas entradas
 
 ```markdown

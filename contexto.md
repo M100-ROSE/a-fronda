@@ -4,7 +4,11 @@ Este arquivo contém **apenas** as regras de negócio/convenções do projeto e 
 explicação dos arquivos e pastas. O registro cronológico de tudo que foi feito fica
 em [`historico.md`](historico.md).
 
-Projeto: um jogo com arte em **pixel art**. Engine, plataforma e mecânicas ainda não
+Projeto: um jogo com arte em **pixel art** no idioma técnico do **Stardew
+Valley** (vista 3/4, silhueta legível, contorno de 1 px, tiles com
+personalidade, idle vivo) — sem copiar o aconchego seguro da fazenda.
+Sensações oficiais da arte: [`inspo/briefing.md`](inspo/briefing.md). Cores:
+[`inspo/paleta.md`](inspo/paleta.md). Engine, plataforma e mecânicas ainda não
 foram definidas.
 
 ---
@@ -86,6 +90,9 @@ foram definidas.
   dois acentos, porque é a porta de escolha de lado. Não usar neon CSS
   (`#FF0000` / `#0000FF` / `#00FF00`) nem nomes que mintam o hex. Cor nova entra
   em `inspo/paleta.md` **antes** de ir para asset ou CSS.
+- **Briefing de sensação:** a fonte da verdade do que cada arte deve **fazer
+  sentir** é `inspo/briefing.md` (personagens, vilas, áreas, estilo Stardew
+  Valley). Sprite e tileset leem briefing + paleta + ficha JSON.
 - **Personagens já cadastrados:** 46 fichas em `game/arts/personas/` — **23** de
   `ideal` `oposicao` e **23** de `ideal` `reino` (lista completa no `historico.md`).
 
@@ -113,6 +120,21 @@ Regras:
   geral do lado, não cada ficha individualmente.
 - Novos lados, facções ou subdivisões políticas só entram no projeto com **pedido
   explícito do usuário**. Nada deve ser inventado nesta área.
+
+## Lugares do mundo (arte)
+
+Áreas novas só entram com pedido explícito. Hoje:
+
+- **Vila revolucionária** (`oposicao`) — calor, urgência, clandestinidade,
+  dignidade pobre. Paleta quente. O jogador pode descansar o olho, não o risco.
+- **Vila direita** (`reino`) — ordem, hierarquia, frieza educada, beleza que
+  convence. Paleta fria. Cidade que acredita no rei; o medo não mora aqui.
+- **Castelo do Rei César** — sede do poder central, **apoiado pelo `reino`**.
+  Deve passar **perigo** (vigilância institucional), **insegurança** (nenhum
+  canto é abrigo) e **prisão psicológica** (beleza, etiqueta e corredores que
+  prendem mesmo com a porta aberta). Paleta de ambiente do reino; ouro como
+  grade, não como tesouro. A biografia do Rei César **não** está definida —
+  ele existe como pressão do espaço (brasão, trono, retratos).
 
 ## Regras de negócio do jogo
 
@@ -145,3 +167,4 @@ explícito do usuário.
 | `game/arts/personas/<nome>/<nome>.json` | Ficha do personagem: nome, idade, nascimento, ideal e descrições (visual, ideais, personalidade). |
 | `inspo/` | Referências visuais e materiais de inspiração. |
 | `inspo/paleta.md` | Paletas oficiais do jogo (vilas, ambientes, personagens P&B, login). |
+| `inspo/briefing.md` | Sensações da arte: estilo Stardew Valley, vilas, castelo do Rei César, cada personagem. |
