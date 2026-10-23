@@ -298,6 +298,32 @@ Pendências:
 
 ---
 
+### 2026-10-22 — Restauração do agente Asta corrompido
+
+Solicitação: não houve pedido do usuário — correção de integridade detectada no
+fechamento da tarefa anterior.
+
+O que foi feito:
+
+1. Detectado que `.opencode/agents/asta.md` estava modificado no working tree, com a
+   `description` corrompida ("regras de anco de dadnegócio, bos").
+2. Confirmado por `git diff` que apenas essa linha divergia do HEAD.
+3. Arquivo restaurado a partir do HEAD (`git restore -- .opencode/agents/asta.md`).
+4. Nenhum agente foi alterado de comportamento — o conteúdo restaurado é o original
+   commitado.
+
+Arquivos alterados:
+
+- `.opencode/agents/asta.md` — restaurado (sem alteração de conteúdo em relação ao HEAD)
+- `historico.md` — esta entrada
+
+Pendências:
+
+- [ ] Investigar a origem da corrupção (alguma edição externa/concorrente tocou o
+  arquivo) se voltar a acontecer.
+
+---
+
 ## Modelo para novas entradas
 
 ```markdown
