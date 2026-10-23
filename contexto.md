@@ -19,15 +19,49 @@ foram definidas.
 - **Versionamento:** pastas vazias recebem um arquivo `.gitkeep` (vazio) para que o Git
   versione o diretório.
 - **Convenção de pastas de personagens:** todo personagem fica em
-  `game/arts/personas/<nome>/`, com duas subpastas:
+  `game/arts/personas/<nome>/`, com a seguinte estrutura:
+  ```
+  game/arts/personas/<nome>/
+    <nome>.json        → ficha do personagem (dados + descrições)
+    <nome>-context/    → contexto/referência do personagem
+    <nome>-sprite/     → sprites/spritesheets e animações
+  ```
+  - `<nome>.json` — ficha do personagem (dados + descrições), na raiz da pasta dele;
   - `<nome>-context/` — contexto/referência do personagem (descrição, referências,
     prompts, decisões);
   - `<nome>-sprite/` — sprites/spritesheets e animações geradas do personagem.
 
   Regra do `<nome>`: **minúsculas**, **sem acentos** e **sem espaços**; se tiver mais
-  de uma palavra, usar hífen. Exemplo: `game/arts/personas/fox/fox-context/` e
-  `game/arts/personas/fox/fox-sprite/`. Vale para todo personagem criado a partir de
-  agora, sem precisar ser reafirmada a cada pedido.
+  de uma palavra, usar hífen. Exemplo: `game/arts/personas/fox/fox.json`,
+  `game/arts/personas/fox/fox-context/` e `game/arts/personas/fox/fox-sprite/`. Vale
+  para todo personagem criado a partir de agora, sem precisar ser reafirmada a cada
+  pedido.
+- **Ficha JSON do personagem (obrigatória):** junto com cada personagem — na **mesma**
+  tarefa, sempre — criar `game/arts/personas/<nome>/<nome>.json` com **todos** os 7
+  campos abaixo, sempre presentes:
+  ```json
+  {
+    "nome": "string",
+    "idade": 0,
+    "data_nascimento": "AAAA-MM-DD",
+    "ideal": "reino",
+    "descricao_visual": "string",
+    "descricao_ideais": "string",
+    "descricao_personalidade": "string"
+  }
+  ```
+  - `nome` — nome do personagem como aparece no jogo.
+  - `idade` — número inteiro em anos.
+  - `data_nascimento` — data no formato `AAAA-MM-DD`; usar `null` se não houver data
+    definida (universo sem calendário real).
+  - `ideal` — apenas `"reino"` ou `"oposicao"` (minúsculo, sem acento; `oposicao`
+    representa a oposição). Sem outros valores.
+  - `descricao_visual` — aparência: silhueta, roupas, cores, marcas, paleta.
+  - `descricao_ideais` — o que o personagem defende/persegue e por quê.
+  - `descricao_personalidade` — temperamento, comportamento, medos, motivações.
+  - Campos não definidos no momento da criação ficam como `null` (nunca inventar
+    conteúdo); o arquivo é criado sempre com **todos** os campos presentes.
+  - O JSON é criado **junto** com o personagem, na mesma tarefa; não é opcional.
 - **Arte:** gerada com o **SpriteCook** (MCP já instalado no ambiente) — conta free,
   **40 créditos/mês**, assets com **uso comercial permitido**. Assets gerados vão para
   dentro de `game/arts/`: mapas em `game/arts/mapa/`, personagens em
@@ -64,5 +98,6 @@ explícito do usuário.
 | `game/code/` | Código do jogo. |
 | `game/arts/` | Arte do jogo. |
 | `game/arts/mapa/` | Tilesets e mapas. |
-| `game/arts/personas/` | Um diretório por personagem, no formato da convenção acima. |
+| `game/arts/personas/` | Um diretório por personagem, no formato da convenção acima (com `<nome>.json`, `<nome>-context/` e `<nome>-sprite/`). |
+| `game/arts/personas/<nome>/<nome>.json` | Ficha do personagem: nome, idade, nascimento, ideal e descrições (visual, ideais, personalidade). |
 | `inspo/` | Referências visuais e materiais de inspiração. |

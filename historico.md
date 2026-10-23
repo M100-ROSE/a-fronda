@@ -324,6 +324,36 @@ Pendências:
 
 ---
 
+### 2026-10-22 — Ficha JSON obrigatória para personagens
+
+Solicitação: o usuário pediu que, ao criar um personagem, também seja criado um arquivo
+JSON com as informações dele (nome, idade, data de nascimento, ideal — reino ou
+oposição —, descrição visual, descrição dos ideais e descrição da personalidade).
+
+O que foi feito:
+
+1. Definido que o JSON fica na raiz da pasta do personagem
+   (`game/arts/personas/<nome>/<nome>.json`), ao lado de `<nome>-context/` e
+   `<nome>-sprite/`.
+2. Documentado o schema no `contexto.md`: os 7 campos em snake_case
+   (`nome`, `idade`, `data_nascimento`, `ideal`, `descricao_visual`,
+   `descricao_ideais`, `descricao_personalidade`), com os tipos de cada um e o enum do
+   `ideal` (`"reino"` ou `"oposicao"`).
+3. Regra registrada no `contexto.md` (convenção de pastas de personagens + ficha JSON
+   obrigatória) e linha correspondente na tabela de arquivos e pastas.
+4. Nenhum personagem ou JSON criado nesta tarefa.
+
+Arquivos alterados:
+
+- `contexto.md` — regra de personagens e tabela de arquivos atualizadas
+- `historico.md` — esta entrada
+
+Pendências:
+
+- [ ] Criar o primeiro personagem já com o `<nome>.json` preenchido conforme o schema.
+
+---
+
 ## Modelo para novas entradas
 
 ```markdown
