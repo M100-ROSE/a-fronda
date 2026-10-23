@@ -51,7 +51,11 @@ foram definidas.
   }
   ```
   - `nome` — nome do personagem como aparece no jogo.
-  - `idade` — número inteiro em anos.
+  - `idade` — número inteiro em anos: a **idade do personagem no momento mais
+    marcante da trajetória dele** (o marco é escolhido caso a caso e registrado no
+    `historico.md`). **Não** é a idade de morte e **não** deve ser derivada
+    automaticamente de `data_nascimento`. Exemplos: Che aos 39 na Bolívia em 1967;
+    Lênin aos 47 em 1917; Marx aos 29 no Manifesto de 1848.
   - `data_nascimento` — data no formato `AAAA-MM-DD`; usar `null` se não houver data
     definida (universo sem calendário real).
   - `ideal` — apenas `"reino"` ou `"oposicao"` (minúsculo, sem acento; `oposicao`
@@ -72,6 +76,25 @@ foram definidas.
   - **Anna** — front-end.
   - **Day** — design.
   - **Dakota** — fechamento: registra no `historico.md`, commita e faz o push.
+- **Personagens já cadastrados:** 23 fichas em `game/arts/personas/`, todas de
+  `ideal` `oposicao` (lista completa no `historico.md`).
+
+## Divisão política do mundo
+
+O mundo do jogo é dividido em dois lados, definidos pelo usuário:
+
+- **`reino`** — a direita política: quem quer manter o que já existe, com o poder
+  centralizado e a hierarquia preservada.
+- **`oposicao`** — as forças revolucionárias: quem quer descentralizar o poder e
+  construir uma sociedade mais igualitária.
+
+Regras:
+
+- O campo `ideal` da ficha aceita **somente** esses dois valores: `"reino"` ou
+  `"oposicao"` (minúsculo, sem acento). Nenhum outro valor é válido.
+- Os **23 personagens** cadastrados até agora pertencem **todos** a `"oposicao"`.
+- Novos lados, facções ou subdivisões políticas só entram no projeto com **pedido
+  explícito do usuário**. Nada deve ser inventado nesta área.
 
 ## Regras de negócio do jogo
 

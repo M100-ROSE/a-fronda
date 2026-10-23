@@ -354,6 +354,76 @@ Pendências:
 
 ---
 
+### 2026-10-22 — 23 personagens históricos criados com ficha JSON
+
+Solicitação: o usuário explicou a divisão política do mundo do jogo (`reino` ×
+`oposicao`) e pediu para pesquisar e adicionar 23 personagens históricos, todos com a
+ficha JSON obrigatória.
+
+O que foi feito:
+
+1. Pesquisa dos dados biográficos de cada personagem (nascimento, aparência, ideais e
+   personalidade), dividida em 4 lotes paralelos.
+2. Criadas as 23 pastas em `game/arts/personas/<slug>/`, cada uma com `<slug>.json`,
+   `<slug>-context/.gitkeep` e `<slug>-sprite/.gitkeep` (arquivos `.gitkeep` de 0 bytes).
+3. Todas as fichas gravadas com `"ideal": "oposicao"` e os 7 campos validados (JSON em
+   UTF-8 sem BOM, `ConvertFrom-Json` sem erro).
+4. Documentadas no `contexto.md` a regra da divisão política (seção **Divisão política
+   do mundo**) e a convenção do campo `idade` (idade no momento mais marcante da
+   trajetória, não idade de morte).
+
+Personagens criados (slug | nome | nascimento | idade | momento marcante usado):
+
+| slug | nome | data_nascimento | idade | momento marcante |
+| --- | --- | --- | --- | --- |
+| carlos-marighella | Carlos Marighella | 1911-12-05 | 56 | Fundação da ALN / ruptura com o PCB, fev/1968 |
+| karl-marx | Karl Marx | 1818-05-05 | 29 | Publicação do Manifesto Comunista, fev/1848 |
+| friedrich-engels | Friedrich Engels | 1820-11-28 | 27 | Coautoria do Manifesto Comunista, fev/1848 |
+| che-guevara | Che Guevara | 1928-06-14 | 39 | Campanha guerrilheira na Bolívia, 1967 |
+| fidel-castro | Fidel Castro | 1926-08-13 | 32 | Vitória da Revolução e entrada em Havana, jan/1959 |
+| leonel-brizola | Leonel Brizola | 1922-01-22 | 39 | Campanha da Legalidade no Palácio Piratini, ago–set/1961 |
+| rosa-luxemburgo | Rosa Luxemburgo | 1871-03-05 | 47 | Fundação do KPD / Revolução Espartaquista, jan/1919 |
+| mao-tse-tung | Mao Tsé-Tung | 1893-12-26 | 55 | Proclamação da República Popular da China, out/1949 |
+| malcolm-x | Malcolm X | 1925-05-19 | 38 | Rompimento com a Nação do Islã e peregrinação a Meca, 1964 |
+| rosa-parks | Rosa Parks | 1913-02-04 | 42 | Recusa de ceder o assento em Montgomery, dez/1955 |
+| carlos-lamarca | Carlos Lamarca | 1937-10-27 | 31 | Deserção de Quitaúna com 63 fuzis, jan/1969 |
+| iara-iavelberg | Iara Iavelberg | 1944-05-07 | 25 | Treinamento no Vale do Ribeira / formação teórica, início de 1970 |
+| fred-hampton | Fred Hampton | 1948-08-30 | 21 | Presidência do capítulo de Illinois dos Panteras Negras e Coalizão Arco-Íris, set/1969 |
+| huey-p-newton | Huey P. Newton | 1942-02-17 | 24 | Fundação do Partido Pantera Negra, out/1966 |
+| martin-luther-king-jr | Martin Luther King Jr. | 1929-01-15 | 34 | Discurso "I Have a Dream", ago/1963 |
+| tupac-shakur | Tupac Shakur | 1971-06-16 | 23 | Lançamento de *Me Against the World*, mar/1995 |
+| vladimir-lenin | Vladimir Lênin | 1870-04-22 | 47 | Revolução de Outubro, nov/1917 |
+| maximilien-de-robespierre | Maximilien de Robespierre | 1758-05-06 | 35 | Entrada no Comitê de Salvação Pública, jul/1793 |
+| nelson-mandela | Nelson Mandela | 1918-07-18 | 75 | Posse como presidente da África do Sul, mai/1994 |
+| mahatma-gandhi | Mahatma Gandhi | 1869-10-02 | 60 | Marcha do Sal, 1930 |
+| thomas-sankara | Thomas Sankara | 1949-12-21 | 33 | Assunção da presidência de Alto Volta, ago/1983 |
+| kwame-nkrumah | Kwame Nkrumah | 1909-09-21 | 47 | Independência de Gana, mar/1957 |
+| patrice-lumumba | Patrice Lumumba | 1925-07-02 | 34 | Discurso da independência do Congo, jun/1960 |
+
+Observações da pesquisa:
+
+- **Che Guevara:** a Wikipédia em português traz 1928-05-14; foi usada `1928-06-14`
+  (data do registro, mais aceita academicamente).
+- **Lênin:** `1870-04-22` é a data no calendário gregoriano; o Wikidata lista
+  `1870-04-10` (calendário juliano).
+
+Arquivos alterados:
+
+- `game/arts/personas/<slug>/<slug>.json` — 23 fichas criadas
+- `game/arts/personas/<slug>/<slug>-context/.gitkeep` — 23 arquivos criados (0 bytes)
+- `game/arts/personas/<slug>/<slug>-sprite/.gitkeep` — 23 arquivos criados (0 bytes)
+- `contexto.md` — seção **Divisão política do mundo**, nota do campo `idade` e item de
+  personagens cadastrados
+- `historico.md` — esta entrada
+
+Pendências:
+
+- [ ] Gerar os sprites de cada personagem (pastas `<slug>-sprite/` ainda vazias).
+- [ ] Desenhar os mapas/reinos em `game/arts/mapa/`.
+- [ ] Decidir se/quais personagens do lado `reino` serão criados.
+
+---
+
 ## Modelo para novas entradas
 
 ```markdown
