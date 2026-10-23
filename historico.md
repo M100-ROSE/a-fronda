@@ -424,6 +424,88 @@ Pendências:
 
 ---
 
+### 2026-10-22 — 23 personagens do lado reino
+
+Solicitação: o usuário pediu para adicionar 23 personagens do lado `reino` — nomes
+conservadores, liberais e figuras da direita brasileira, completando o outro lado da
+divisão política do mundo do jogo.
+
+O que foi feito:
+
+1. Pesquisa dos dados biográficos de cada personagem, dividida em 4 lotes paralelos
+   (nascimento, aparência, ideais e personalidade), seguindo o schema obrigatório.
+2. Criadas as 23 pastas em `game/arts/personas/<slug>/`, cada uma com `<slug>.json`,
+   `<slug>-context/.gitkeep` e `<slug>-sprite/.gitkeep` (`.gitkeep` de 0 bytes).
+3. Todas as fichas gravadas com `"ideal": "reino"` e os 7 campos validados (JSON em
+   UTF-8 sem BOM, `ConvertFrom-Json` sem erro).
+4. **Correção de estrutura:** 5 personagens brasileiros
+   (`afonso-arinos-de-melo-franco`, `carlos-lacerda`,
+   `jose-bonifacio-de-andrada-e-silva`, `visconde-de-maua` e `visconde-de-uruguai`)
+   tiveram as pastas `<slug>-context/` e `<slug>-sprite/` criadas por engano na **raiz**
+   de `game/arts/personas/`. Os 10 diretórios foram movidos para dentro da pasta de cada
+   personagem, sem sobra de diretórios vazios e sem alterar o conteúdo dos JSONs.
+5. O total do projeto passa a **46 personagens** (23 `oposicao` × 23 `reino`).
+
+Personagens criados (slug | nome | nascimento | idade | momento marcante usado):
+
+| slug | nome | data_nascimento | idade | momento marcante |
+| --- | --- | --- | --- | --- |
+| edmund-burke | Edmund Burke | 1729-01-12 | 61 | Publicação de *Reflexões sobre a Revolução na França*, 1790 |
+| michael-oakeshott | Michael Oakeshott | 1901-12-11 | 60 | Publicação de *Rationalism in Politics*, 1962 |
+| roger-scruton | Roger Scruton | 1944-02-27 | 36 | Publicação de *The Meaning of Conservatism*, 1980 |
+| alexis-de-tocqueville | Alexis de Tocqueville | 1805-07-29 | 29 | Publicação do vol. 1 de *A Democracia na América*, 1835 |
+| winston-churchill | Winston Churchill | 1874-11-30 | 65 | Posse como primeiro-ministro, mai/1940 |
+| margaret-thatcher | Margaret Thatcher | 1925-10-13 | 53 | Posse como primeira-ministra, mai/1979 |
+| ronald-reagan | Ronald Reagan | 1911-02-06 | 69 | Posse como 40º presidente dos EUA, jan/1981 |
+| konrad-adenauer | Konrad Adenauer | 1876-01-05 | 73 | Eleição como 1º chanceler federal da RFA, set/1949 |
+| robert-schuman | Robert Schuman | 1886-06-29 | 63 | Declaração Schuman, mai/1950 |
+| john-howard | John Howard | 1939-07-26 | 56 | Posse como primeiro-ministro da Austrália, mar/1996 |
+| brian-mulroney | Brian Mulroney | 1939-03-20 | 45 | Posse como primeiro-ministro do Canadá, set/1984 |
+| barry-goldwater | Barry Goldwater | 1909-01-02 | 55 | Nomeação republicana à presidência, jul/1964 |
+| friedrich-hayek | Friedrich Hayek | 1899-05-08 | 75 | Prêmio Nobel de Economia, out/1974 |
+| milton-friedman | Milton Friedman | 1912-07-31 | 64 | Prêmio Nobel de Economia, out/1976 |
+| ludwig-von-mises | Ludwig von Mises | 1881-09-29 | 38 | Artigo sobre o cálculo econômico no socialismo, 1920 |
+| thomas-sowell | Thomas Sowell | 1930-06-30 | 50 | *Knowledge and Decisions* e ingresso na Hoover Institution, 1980 |
+| walter-williams | Walter Williams | 1936-03-31 | 44 | Entrada na George Mason University e coluna sindicada, 1980 |
+| roberto-campos | Roberto Campos | 1917-04-17 | 47 | Ministro do Planejamento e coordenação do PAEG, 1964 |
+| jose-bonifacio-de-andrada-e-silva | José Bonifácio de Andrada e Silva | 1763-06-13 | 59 | Independência do Brasil, set/1822 |
+| visconde-de-uruguai | Visconde de Uruguai | 1807-10-04 | 44 | Intervenção no Prata contra Oribe e Rosas, 1851–1852 |
+| carlos-lacerda | Carlos Lacerda | 1914-04-30 | 40 | Atentado da Rua Tonelero e crise que levou ao suicídio de Vargas, 1954 |
+| afonso-arinos-de-melo-franco | Afonso Arinos de Melo Franco | 1905-11-27 | 45 | Lei Afonso Arinos contra a discriminação racial, 1951 |
+| visconde-de-maua | Visconde de Mauá | 1813-12-28 | 40 | Inauguração da primeira ferrovia brasileira, 1854 |
+
+Observações da pesquisa (divergências factuais):
+
+- **Edmund Burke:** `1729-01-12` é a data no estilo novo (gregoriano); no estilo antigo
+  (juliano) corresponde a 1º/jan/1729. Foi usada a data gregoriana.
+- **Barry Goldwater:** `1909-01-02`; algumas fontes antigas citam 01/01/1909. Foi usada
+  a data mais difundida nas fontes biográficas.
+- **Visconde de Uruguai:** `1807-10-04`; a Wikipédia em inglês traz 1808. Foi usada a
+  data das fontes em português.
+- **Lênin e Che Guevara:** divergências já registradas na entrada dos 23 personagens de
+  `oposicao` (Lênin: gregoriano × juliano; Che: data de registro × Wikipédia em português).
+
+Arquivos alterados:
+
+- `game/arts/personas/<slug>/<slug>.json` — 23 fichas criadas (lado `reino`)
+- `game/arts/personas/<slug>/<slug>-context/.gitkeep` — 23 arquivos criados (0 bytes)
+- `game/arts/personas/<slug>/<slug>-sprite/.gitkeep` — 23 arquivos criados (0 bytes)
+- `game/arts/personas/<slug>/<slug>-context/` e `<slug>-sprite/` — 10 diretórios
+  movidos da raiz de `personas/` para dentro da pasta do personagem (correção de
+  estrutura dos 5 personagens brasileiros)
+- `contexto.md` — contagem de personagens atualizada (46 / 23 / 23) e nota de precisão
+  sobre os liberais clássicos no lado `reino`
+- `historico.md` — esta entrada
+
+Pendências:
+
+- [ ] Gerar os sprites dos 46 personagens (pastas `<slug>-sprite/` ainda vazias).
+- [ ] Desenhar os mapas/reinos em `game/arts/mapa/`.
+- [ ] (Anterior, concluída) Decidir se/quais personagens do lado `reino` seriam criados —
+  resolvida nesta tarefa, com 23 nomes escolhidos pelo usuário.
+
+---
+
 ## Modelo para novas entradas
 
 ```markdown

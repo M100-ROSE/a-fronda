@@ -76,8 +76,8 @@ foram definidas.
   - **Anna** — front-end.
   - **Day** — design.
   - **Dakota** — fechamento: registra no `historico.md`, commita e faz o push.
-- **Personagens já cadastrados:** 23 fichas em `game/arts/personas/`, todas de
-  `ideal` `oposicao` (lista completa no `historico.md`).
+- **Personagens já cadastrados:** 46 fichas em `game/arts/personas/` — **23** de
+  `ideal` `oposicao` e **23** de `ideal` `reino` (lista completa no `historico.md`).
 
 ## Divisão política do mundo
 
@@ -92,7 +92,15 @@ Regras:
 
 - O campo `ideal` da ficha aceita **somente** esses dois valores: `"reino"` ou
   `"oposicao"` (minúsculo, sem acento). Nenhum outro valor é válido.
-- Os **23 personagens** cadastrados até agora pertencem **todos** a `"oposicao"`.
+- O projeto tem hoje **46 personagens**: **23** com `ideal` `"oposicao"` e **23** com
+  `ideal` `"reino"`.
+- **Precisão importante sobre o lado `reino`:** os nomes desse lado foram escolhidos
+  pelo usuário e reúnem conservadores, democratas-cristãos e também **liberais
+  clássicos** (Hayek, Mises, Friedman, Sowell, Walter Williams e Roberto Campos), que
+  defendem **Estado limitado e descentralização econômica**. Portanto, `ideal` é a
+  **classificação política do jogo**, **não** uma afirmação de que todos os personagens
+  do lado `reino` defendem poder centralizado: a definição acima descreve a tendência
+  geral do lado, não cada ficha individualmente.
 - Novos lados, facções ou subdivisões políticas só entram no projeto com **pedido
   explícito do usuário**. Nada deve ser inventado nesta área.
 
