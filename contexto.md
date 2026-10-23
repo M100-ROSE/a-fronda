@@ -22,7 +22,11 @@ Regra combinada: **tudo o que for feito deve ser registrado aqui, em Markdown.**
 - Estrutura:
   - `README.md`
   - `contexto.md` — este arquivo
-  - `game/` — pasta do jogo/projeto (por enquanto vazia, versionada com `.gitkeep`)
+  - `game/` — pasta do jogo/projeto, organizada em:
+    - `game/code/` — código do jogo (versionada com `.gitkeep`)
+    - `game/arts/` — arte do jogo, subdividida em:
+      - `game/arts/mapa/` — tilesets/mapas (versionada com `.gitkeep`)
+      - `game/arts/personas/` — sprites de personagens (versionada com `.gitkeep`)
   - `inspo/` — pasta de referências visuais (por enquanto vazia, versionada com `.gitkeep`)
   - `.opencode/opencode.json` — configuração do projeto (`default_agent: bebell`)
   - `.opencode/agents/` — agentes do time (bebell, asta, anna, day, dakota)
@@ -236,6 +240,40 @@ Pendências:
 
 - Nenhuma pendência nova. Observação: a regra passa a valer para todas as tarefas
   futuras, sem exceção.
+
+---
+
+### 2026-10-22 — Estrutura de pastas do jogo (code e arts)
+
+Solicitação: criar a pasta `code` e a pasta `arts` dentro de `game`, e dentro de `arts`
+criar as pastas `mapa` e `personas`.
+
+O que foi feito:
+
+1. Criada a pasta `game/code/`.
+2. Criada a pasta `game/arts/` com as subpastas `game/arts/mapa/` e `game/arts/personas/`.
+3. Como o Git não versiona diretórios vazios, adicionado um arquivo `.gitkeep`
+   (vazio, 0 bytes) em cada pasta nova — `game/code`, `game/arts/mapa` e
+   `game/arts/personas`. O `game/.gitkeep` existente foi mantido como está.
+4. Definida a convenção de organização: `game/code` guarda o código do jogo;
+   `game/arts` guarda a arte, com `mapa` para tilesets/mapas e `personas` para
+   personagens.
+5. Atualizada a seção **Estado atual do repositório** com a nova árvore de pastas.
+6. Registrada esta entrada no histórico, seguida de commit e `git push origin main`.
+
+Arquivos alterados:
+
+- `game/code/.gitkeep` — criado (arquivo vazio, mantém a pasta no versionamento)
+- `game/arts/mapa/.gitkeep` — criado (arquivo vazio, mantém a pasta no versionamento)
+- `game/arts/personas/.gitkeep` — criado (arquivo vazio, mantém a pasta no versionamento)
+- `contexto.md` — nova entrada no histórico e estrutura do repositório atualizada
+
+Pendências:
+
+- [ ] Preencher `game/code` com a base do código do jogo.
+- [ ] Preencher `game/arts/mapa` com os tilesets/mapas.
+- [ ] Preencher `game/arts/personas` com os sprites de personagens.
+- [ ] Preencher `inspo/` com as referências visuais do projeto.
 
 ---
 
