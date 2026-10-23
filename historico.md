@@ -506,6 +506,63 @@ Pendências:
 
 ---
 
+### 2026-10-23 — Revisão das paletas + agentes Monica/Izak + publicação
+
+Solicitação: verificar se as paletas de cores estavam de acordo e passavam a
+mensagem certa do contexto do jogo; em seguida registrar tudo no `historico.md`
+e no `contexto.md` e subir as alterações para o GitHub.
+
+O que foi feito:
+
+1. Lido o rascunho em `inspo/paleta.md` contra a divisão política do mundo
+   (`reino` × `oposicao`) e contra as fichas visuais dos personagens.
+2. **Diagnóstico:** o rascunho **não** passava a mensagem do jogo.
+   - Nomes mentiam o hex (ex.: “verde” = `#2094f3` azul; “azul claro” =
+     `#90EE90` verde; “vermelho escuro” = `#800080` roxo).
+   - As duas vilas compartilhavam os mesmos swatches (`#808080`, `#90EE90`,
+     `#B22222`, `#DAA520`, `#00FF00`), então os lados políticos não se
+     distinguiam.
+   - Ambiente da oposição era um arco-íris Material Design.
+   - Login/cadastro usava magenta `#FF00E9` e “gold” roxo, fora do universo.
+   - A rampa P&B dos personagens repetia os nomes `Cinza` e `Branco`.
+3. Reescrita de `inspo/paleta.md` como fonte da verdade, alinhada ao contexto:
+   - **Vila revolucionária (`oposicao`):** vermelho bandeira `#C41E3A`, tijolo,
+     ocre, oliva de guerrilha, terra, fumaça, papel sujo, carvão.
+   - **Vila direita (`reino`):** azul-marinho `#0B1D4A`, azul real, ouro
+     autoridade `#C9A227`, marfim, pedra, grafite.
+   - **Ambientes** de cada vila (tileset): terra/tijolo/lampião vs
+     mármore/ardósia/jardim aparado.
+   - **Personagens P&B:** rampa de 8 degraus sem nomes repetidos.
+   - **Login/cadastro:** palco escuro com os dois acentos de facção (única
+     paleta que mistura os lados, porque é a porta de escolha).
+   - Regras: nome = hex; sem neon CSS; cor nova entra neste arquivo antes de
+     asset/CSS.
+4. Atualizado o `contexto.md` com a regra de identidade visual, a linha da
+   paleta na tabela de arquivos e os agentes **Monica** e **Izak** (já
+   existentes em `.opencode/agents/`, mas ainda não documentados nas regras).
+5. Incluídos no mesmo envio os arquivos ainda não versionados do time:
+   `.opencode/agents/monica.md`, `.opencode/agents/izak.md` e a atualização de
+   `.opencode/agents/bebell.md` (delega também para Monica e Izak). Corrigidos
+   backticks quebrados nesses três arquivos (`\asta\` → `` `asta` ``, `ead` →
+   `read`, `\websearch\` → `` `websearch` ``).
+
+Arquivos alterados:
+
+- `inspo/paleta.md` — reescrito (paletas oficiais alinhadas ao contexto)
+- `contexto.md` — identidade visual, tabela de arquivos, Monica e Izak
+- `historico.md` — esta entrada
+- `.opencode/agents/bebell.md` — orquestração passa a incluir Monica e Izak
+- `.opencode/agents/monica.md` — criado (pesquisa de referências)
+- `.opencode/agents/izak.md` — criado (relatório final)
+
+Pendências:
+
+- [ ] Aplicar as paletas oficiais nos primeiros tilesets (`game/arts/mapa/`) e
+      nos sprites (`game/arts/personas/<slug>/<slug>-sprite/`).
+- [ ] Quando houver tela de login/cadastro, usar só a paleta correspondente.
+
+---
+
 ## Modelo para novas entradas
 
 ```markdown

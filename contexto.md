@@ -75,7 +75,17 @@ foram definidas.
   - **Asta** — back-end.
   - **Anna** — front-end.
   - **Day** — design.
+  - **Monica** — pesquisa de referências visuais, tendências, assets e documentação.
   - **Dakota** — fechamento: registra no `historico.md`, commita e faz o push.
+  - **Izak** — relatório final e opinião de cada agente sobre o que foi entregue.
+- **Identidade visual / paletas:** a fonte da verdade das cores é
+  `inspo/paleta.md`. **`oposicao`** = vermelho, tijolo, ocre, oliva, carvão
+  (calor, terra, bandeira, clandestinidade). **`reino`** = azul-marinho, ouro,
+  marfim, grafite (ordem, instituição, hierarquia). Personagens históricos podem
+  usar a rampa preto-e-branco. Login/cadastro é a única paleta que mistura os
+  dois acentos, porque é a porta de escolha de lado. Não usar neon CSS
+  (`#FF0000` / `#0000FF` / `#00FF00`) nem nomes que mintam o hex. Cor nova entra
+  em `inspo/paleta.md` **antes** de ir para asset ou CSS.
 - **Personagens já cadastrados:** 46 fichas em `game/arts/personas/` — **23** de
   `ideal` `oposicao` e **23** de `ideal` `reino` (lista completa no `historico.md`).
 
@@ -125,6 +135,8 @@ explícito do usuário.
 | `.opencode/agents/anna.md` | Subagente de front-end. |
 | `.opencode/agents/day.md` | Subagente de design. |
 | `.opencode/agents/dakota.md` | Subagente de fechamento (histórico, commit, push). |
+| `.opencode/agents/monica.md` | Subagente de pesquisa de referências (parceira da Day). |
+| `.opencode/agents/izak.md` | Subagente de relatório final (opinião de cada agente). |
 | `game/` | Raiz do jogo. |
 | `game/code/` | Código do jogo. |
 | `game/arts/` | Arte do jogo. |
@@ -132,3 +144,4 @@ explícito do usuário.
 | `game/arts/personas/` | Um diretório por personagem, no formato da convenção acima (com `<nome>.json`, `<nome>-context/` e `<nome>-sprite/`). |
 | `game/arts/personas/<nome>/<nome>.json` | Ficha do personagem: nome, idade, nascimento, ideal e descrições (visual, ideais, personalidade). |
 | `inspo/` | Referências visuais e materiais de inspiração. |
+| `inspo/paleta.md` | Paletas oficiais do jogo (vilas, ambientes, personagens P&B, login). |
