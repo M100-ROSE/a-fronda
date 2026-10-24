@@ -645,6 +645,96 @@ Pendências:
 
 ---
 
+### 2026-10-23 — Tela de login/cadastro em MonoGame (design + 3 levas: front, auth, polimento)
+
+Solicitação: "crie uma tela de login/cadastro ... em levas, codigo frontend, adicione
+backend e dai na terceira parte adicione mais detalhes no frontend". Executada em 4
+levas pelos agentes (Day → Anna → Asta → Anna).
+
+O que foi feito:
+
+**Leva 0 — Design (Day):**
+
+1. Criado `game/code/docs/design-tela-login.md` — spec visual completa da tela de
+   login/cadastro: janela 960×540, painel 360×480 centrado, paleta de login de
+   `inspo/paleta.md` usada exatamente, CTA primário no lado `oposicao` (`#C41E3A`),
+   botão "criar conta" desligado até escolher lado, erro como placa sólida `#7A1418`
+   com texto `#F3EDE0`, borda de input `#C41E3A`, foco `#E8DCC8`, ouro `#C9A227`
+   restrito a 3 usos de marca, contorno carvão sancionado pelo briefing.
+
+**Leva 1 — Frontend (Anna):**
+
+2. Criada a solução em `game/code/`: `Fronda.slnx`, `README.md`, `.gitignore` (bin/,
+   obj/, *.user) e o projeto `src/Fronda.Client/` (MonoGame 3.8.2.1105 via
+   PackageReference, TFM net8.0), com um arquivo por classe:
+   - `Program.cs`; `Core/` (GameApp, Scene, SceneManager, Entrada);
+   - `Rendering/` (Palette, ShapeBatch);
+   - `UI/` (Widget, Label, Button, FactionButton, BotaoCta, BotaoTab, LinkButton,
+     TextBox, ToggleGroup, Panel, ErrorBanner);
+   - `Font/PixelFont.cs` (glifos 5×7 procedurais em runtime, acentos PT-BR, sem
+     Content Pipeline); `Scenes/LoginScene.cs`; `Auth/` (IAuthService,
+     NullAuthService).
+3. Tela completa: tabs entrar/cadastrar, usuário+senha (máscara), confirmação, escolha
+   de lado reino×oposição, CTA desligado até escolher lado, validações locais, foco
+   teclado+mouse.
+
+**Leva 2 — Back-end (Asta):**
+
+4. Criado `src/Fronda.Auth/` (class library net8.0, **sem** dependência de MonoGame;
+   única dependência é Client→Auth):
+   - `Modelos/` (Lado, Jogador, Resultado — definição única movida para cá);
+   - `IAuthService.cs`, `Conta.cs`;
+   - `Hash/` (IHasher, Pbkdf2Hasher — PBKDF2-HMAC-SHA256, 150k iterações, salt de
+     16 B/conta, FixedTimeEquals);
+   - `Armazenamento/` (IContasRepository, JsonContasRepository — persistência em
+     `%APPDATA%\Fronda\usuarios.json`, gravação atômica .tmp+move, lock, tolerante a
+     arquivo ausente/corrompido);
+   - `AuthService.cs` com revalidação server-side (usuário 3–20 lowercase
+     a-z0-9_-, senha ≥8, confirmação, lado válido, unicidade).
+5. Cliente: ponto de composição em `LoginScene` trocado para o `AuthService` real
+   (`NullAuthService` mantido como fallback, não default).
+6. Criado `tests/Fronda.Auth.Tests/` (xunit, 25 testes, caminho de dados em %TEMP%).
+   JSON de contas: id, usuario, hash, salt, lado ("reino"/"oposicao"), dataCriacao.
+
+**Leva 3 — Polimento frontend (Anna):**
+
+7. Caret piscando (30/30 frames); dissolução de entrada em 4 degraus discretos de cor
+   (nota: BlendState.Opaque ⇒ alpha não afeta; fade é degrau de cor via
+   `Palette.DissolverPara`); microfeedback nos botões de facção (nudge 1 px + filete
+   intensificado); nova cena `Scenes/BemVindoScene.cs` com transição por dissolução
+   interna (SceneManager só corta — documentado); contorno 1 px carvão `#1A1210` no
+   painel (vila revolucionária nº 10, sancionada pelo briefing); placa de erro com
+   2 degraus + shake 1 px/3 frames no input com erro; pulso 2 degraus no filete de
+   ouro do título; glifo "…" dedicado no PixelFont.
+8. Contrato ajustado no cliente: `credenciais_invalidas` com `ErroCampO` null (banner
+   sob o CTA) e `usuario_invalido` mapeado.
+9. Validação: `dotnet build` 0 erro/0 aviso e `dotnet test` 25/25. Sem mutações no
+   back-end na leva 3.
+
+Arquivos alterados:
+
+- `game/code/docs/design-tela-login.md` — criado (spec da tela de login)
+- `game/code/Fronda.slnx`, `game/code/README.md`, `game/code/.gitignore` — criados
+- `game/code/src/Fronda.Client/` — criado (Program, Core/, Rendering/, UI/, Font/,
+  Auth/, Scenes/)
+- `game/code/src/Fronda.Auth/` — criado (Auth, Conta, Hash/, Modelos/, Armazenamento/)
+- `game/code/tests/Fronda.Auth.Tests/` — criado (AuthService, JsonContasRepository,
+  Pbkdf2Hasher, Suporte)
+- `contexto.md` — engine definida como MonoGame (C#, DesktopGL) e tabela de
+  arquivos/pastas atualizada
+- `historico.md` — esta entrada
+
+Pendências:
+
+- [ ] Itens da spec §6 ainda não pedidos: hover com insígnia pulsando, costura do
+      painel, fumaça/lampião no horizonte, dithering do placeholder.
+- [ ] Fade na troca de modo entrar↔cadastrar.
+- [ ] Migração futura do número de iterações PBKDF2 no formato do hash armazenado.
+- [ ] Troca de cena pós-login é placeholder (`BemVindoScene`) — definir a cena real.
+- [ ] Regras de negócio do jogo continuam indefinidas (nada a inventar).
+
+---
+
 ## Modelo para novas entradas
 
 ```markdown

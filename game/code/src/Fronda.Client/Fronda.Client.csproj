@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <!-- TFM net8.0: MonoGame.Framework.DesktopGL 3.8.2 só distribui binários até net6.0/net8.0;
+         o SDK 10 instalado compila net8.0 sem problema. Prioridade: compilar. -->
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Fronda</RootNamespace>
+    <AssemblyName>Fronda.Client</AssemblyName>
+    <RollForward>LatestMajor</RollForward>
+    <!-- Nenhum Content Pipeline nesta leva: sem .mgcb, sem SpriteFont. -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Back-end local de autenticação (leva 2): contrato IAuthService + impl. JSON/PBKDF2. -->
+    <ProjectReference Include="..\Fronda.Auth\Fronda.Auth.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.2.1105" />
+  </ItemGroup>
+
+</Project>

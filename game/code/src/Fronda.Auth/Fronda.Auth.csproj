@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- TFM net8.0 para combinar com o Fronda.Client; SDK 10 compila net8.0 sem problema. -->
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Fronda.Auth</RootNamespace>
+    <AssemblyName>Fronda.Auth</AssemblyName>
+    <!-- Não referencia MonoGame nem conhece o cliente: dependência única Client → Auth. -->
+  </PropertyGroup>
+
+</Project>

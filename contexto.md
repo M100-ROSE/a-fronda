@@ -9,8 +9,9 @@ Valley** (vista 3/4, silhueta legível, contorno de 1 px, tiles com
 personalidade, idle vivo) — sem copiar o aconchego seguro da fazenda.
 Sensações oficiais da arte: [`inspo/briefing.md`](inspo/briefing.md). Cores:
 [`inspo/paleta.md`](inspo/paleta.md). Links de referência (pixel Stardew,
-medieval, retratos): [`inspo/visual.md`](inspo/visual.md). Engine, plataforma e
-mecânicas ainda não foram definidas.
+medieval, retratos): [`inspo/visual.md`](inspo/visual.md). Engine e plataforma **definidas**:
+**MonoGame (C#, DesktopGL)** no .NET 8 (Windows desktop). Mecânicas e regras de
+gameplay ainda não foram definidas.
 
 ---
 
@@ -165,7 +166,14 @@ explícito do usuário.
 | `.opencode/agents/monica.md` | Subagente de pesquisa de referências (parceira da Day). |
 | `.opencode/agents/izak.md` | Subagente de relatório final (opinião de cada agente). |
 | `game/` | Raiz do jogo. |
-| `game/code/` | Código do jogo. |
+| `game/code/` | Código do jogo: solução **MonoGame** em C# (.NET 8). Contém a solução, o cliente, o back-end de autenticação, os testes e a pasta `docs/` de design. Também guarda `itens/`, `personagens/` e `obj/` (pastas reservadas com `.gitkeep`). |
+| `game/code/Fronda.slnx` | Solução .NET: `Fronda.Client`, `Fronda.Auth` e `Fronda.Auth.Tests`. |
+| `game/code/README.md` | Descrição curta do código (como buildar/rodar a solução). |
+| `game/code/.gitignore` | Ignora artefatos de build (`bin/`, `obj/`) e `*.user`. |
+| `game/code/docs/` | Documentação de design; `design-tela-login.md` é a spec visual da tela de login/cadastro. |
+| `game/code/src/Fronda.Client/` | Cliente MonoGame 3.8.2 (DesktopGL): núcleo do jogo (`Core/`), renderização (`Rendering/`), UI (`UI/`), fonte procedural (`Font/PixelFont.cs`), cenas (`Scenes/LoginScene.cs`, `Scenes/BemVindoScene.cs`) e `Auth/` (fallback `NullAuthService`). |
+| `game/code/src/Fronda.Auth/` | Back-end de autenticação (class library, **sem** dependência de MonoGame): modelos (`Modelos/`), hash PBKDF2 (`Hash/`), repositório JSON em `%APPDATA%\Fronda\usuarios.json` (`Armazenamento/`) e `AuthService` com revalidação server-side. Única dependência do cliente. |
+| `game/code/tests/Fronda.Auth.Tests/` | Testes xunit de `Fronda.Auth` (`AuthService`, `JsonContasRepository`, `Pbkdf2Hasher`). |
 | `game/arts/` | Arte do jogo. |
 | `game/arts/mapa/` | Tilesets e mapas. |
 | `game/arts/personas/` | Um diretório por personagem, no formato da convenção acima (com `<nome>.json`, `<nome>-context/` e `<nome>-sprite/`). |

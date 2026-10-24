@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Fronda.Client/Fronda.Client.csproj" />
+    <Project Path="src/Fronda.Auth/Fronda.Auth.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Fronda.Auth.Tests/Fronda.Auth.Tests.csproj" />
+  </Folder>
+</Solution>
