@@ -24,13 +24,14 @@ public sealed class LinkButton : Button
 
         var tamanho = fonte.MedirTexto(Texto, Escala);
         int x = Limites.X + (Limites.Width - tamanho.X) / 2;
-        int y = Limites.Y + (Limites.Height - tamanho.Y) / 2 - 2;
+        int yBase = fonte.TopoBaseNoSlot(Texto, Escala, Limites.Y);
 
-        fonte.Desenhar(lote, Texto, new Point(x, y), CapaSobrePainel(CorTexto(EstadoAtual)), Escala);
+        fonte.Desenhar(lote, Texto, new Point(x, yBase), CapaSobrePainel(CorTexto(EstadoAtual)), Escala);
 
-        // underline 1px na largura do texto (some quando desabiltado)
+        // underline 1px na largura do texto, 2px abaixo da base ("linha 22 do
+        // slot", spec §2.2/§3.7 — some quando desabilitado)
         if (!Desabilitado)
-            formas.Filete(x, y + tamanho.Y + 2, tamanho.X, 1, CapaSobrePainel(
+            formas.Filete(x, Limites.Y + 22, tamanho.X, 1, CapaSobrePainel(
                 Hover || Focado ? Palette.Texto : Palette.TextoMudo));
 
         if (Focado) DesenharContornoFoco(formas);

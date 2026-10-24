@@ -9,7 +9,8 @@ namespace Fronda.UI;
 /// <summary>
 /// TextBox (spec §3.2): BG Fundo "recorte na parede", borda 1px Borda (hover
 /// marfim, erro AcentoOposicao #C41E3A — nunca Erro como borda fina), foco
-/// mantém a borda + outline externo Foco. Placeholder pedra. Senha em bullets.
+/// mantém a borda + outline externo Foco. Placeholder pedra. Escala 3, recuo
+/// 12px, caret 2×21; senha: cada caractere vira '*' (máscara truncada em 16).
 /// Leva 3: caret piscando estilo pixel (30 frames aceso / 30 apagado, sem
 /// interpolação; ao ganhar foco recomeça aceso; pára de contar na perda de
 /// foco) e trem de 1px do input recém-errado (3 frames, sem bounce).
@@ -91,35 +92,34 @@ public sealed class TextBox : Widget
         formas.RetanguloCheio(r, CapaSobrePainel(bg));
         formas.RetanguloContorno(r, 1, CapaSobrePainel(corBorda));
 
-        const int escala = 2;
+        const int escala = 3;      // corpo/inputs: escala 3 (spec §3.2)
+        const int recuo = 12;      // recuo esquerdo do escrito (§3.2)
+        const int alturaBase = PixelFont.AlturaBase * escala; // 21
+        int yBase = r.Y + (r.Height - alturaBase) / 2;        // 4 de teto p/ slot 30
         var corTxt = CapaSobrePainel(Desabilitado ? Palette.TextoMudo : Palette.Texto);
 
-        string visivel = MascaraSenha ? new string('#', Texto.Length) : Texto;
         if (Texto.Length == 0)
         {
             if (!Focado) // placeholder pedra, some ao focar
-                fonte.Desenhar(lote, Placeholder, new Point(r.X + 8, r.Y + 13),
+                fonte.Desenhar(lote, Placeholder, new Point(r.X + recuo, yBase),
                     CapaSobrePainel(Palette.TextoMudo), escala);
-        }
-        else if (MascaraSenha)
-        {
-            // bullet ▮ 8×14 por caractere, avança 12px (mesmo avanço de um glifo 2×)
-            for (int i = 0; i < Texto.Length; i++)
-            {
-                int x = r.X + 8 + i * 12;
-                formas.RetanguloCheio(new Rectangle(x, r.Y + 13, 8, 14), corTxt);
-            }
         }
         else
         {
-            fonte.Desenhar(lote, visivel, new Point(r.X + 8, r.Y + 13), corTxt, escala);
+            // senha: cada caractere vira '*' (glifo existe; valor real só na memória),
+            // máscara truncada na exibição em 16 (§3.2)
+            string visivel = MascaraSenha ? new string('*', Texto.Length) : Texto;
+            if (visivel.Length > 16) visivel = visivel[..16];
+            fonte.Desenhar(lote, visivel, new Point(r.X + recuo, yBase), corTxt, escala);
         }
 
-        // caret piscando 2×16 marfim (leva 3: 30/30 frames)
+        // caret estático 2×21 marfim, 2px à direita do último caractere (§3.2);
+        // mostrado sempre que focado (leva 3: 30/30 frames piscando)
         if (Focado && !Desabilitado && CaretAceso)
         {
-            int xCaret = r.X + 8 + Texto.Length * 12;
-            formas.RetanguloCheio(new Rectangle(xCaret, r.Y + 12, 2, 16), corTxt);
+            int xCaret = Math.Min(r.X + recuo + Texto.Length * PixelFont.Avanco * escala,
+                r.Right - recuo / 2 - 2);
+            formas.RetanguloCheio(new Rectangle(xCaret, yBase, 2, alturaBase), corTxt);
         }
 
         if (Focado) DesenharContornoFoco(formas);

@@ -42,8 +42,9 @@ public sealed class BotaoCta : Button
         {
             var acento = AcentoAtual;
             if (acento is null) return Palette.Borda; // neutro do entrar (§3.6)
-            if (e == Estado.Hover && acento == Palette.AcentoOposicao)
-                return Palette.Erro; // degrau de sombra do pano vermelho
+            if (acento == Palette.AcentoOposicao &&
+                (e == Estado.Hover || e == Estado.Pressionado))
+                return Palette.Erro; // degrau de sombra do pano vermelho (§3.6)
             return acento.Value;
         }
         return Palette.Borda; // modo entrar: neutro
@@ -58,6 +59,11 @@ public sealed class BotaoCta : Button
 
     protected override void Extra(SpriteBatch lote, ShapeBatch formas, PixelFont fonte, Rectangle r, Estado e)
     {
+        // sombra embutida: desce 1px ao pressionar + filete 1px Fundo no topo
+        // (§3.6 "bloco desce 1px; filete 1px #120E10 no topo como sombra")
+        if (e == Estado.Pressionado && !Desabilitado)
+            formas.Filete(r.X, r.Y, r.Width, 1, CapaSobrePainel(Palette.Fundo));
+
         // hover sem acento (entrar, ou cadastrar ainda sem lado): outline Foco (§3.6)
         if (!Focado && Hover && AcentoAtual is null)
             DesenharContornoFoco(formas);

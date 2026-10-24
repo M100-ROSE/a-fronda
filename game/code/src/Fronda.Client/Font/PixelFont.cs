@@ -5,9 +5,12 @@ namespace Fronda.Font;
 
 /// <summary>
 /// Fonte pixel 5×7 gerada proceduralmente em runtime — sem Content Pipeline,
-/// sem .mgcb, sem SpriteFont. Cada glifo é uma malha de linhas ('#' pinta o
-/// pixel); acentos do PT-BR são compostos sobrepondo diacrítico ao glifo-base.
-/// Avanço de 6px (5 de glifo + 1 de espaço), escala inteira.
+/// sem .mgcb, sem SpriteFont. Cada glifo é uma malha de linhas ('X' pinta o
+/// pixel, '.' deixa vazio — '#' também é aceito como pixel); acentos do PT-BR
+/// são compostos sobrepondo diacrítico ao glifo-base. Avanço de 6px (5 de glifo
+/// + 1 de espaço), escala inteira. Contrato de encaixe (spec §2.4):
+/// `Desenhar` recebe pos.Y = TOPO DA BASE do glifo (com acento, o diacrítico
+/// sobe acima por conta própria; com ç, desce abaixo da base).
 /// </summary>
 public sealed class PixelFont
 {
@@ -33,31 +36,63 @@ public sealed class PixelFont
 
     public int LarguraTexto(string texto, int escala) => texto.Length * Avanco * escala;
 
+    /// <summary>Altura de slot (§2.4, fórmula 2): 3·N se a linha tem acento,
+    /// 7·N de base sempre, 2·N se tem ç.</summary>
+    public int AlturaSlot(string texto, int escala)
+        => ((TemAcento(texto) ? 3 : 0) + AlturaBase + (TemCedilha(texto) ? 2 : 0)) * escala;
+
+    /// <summary>pos.Y a passar a Desenhar com o slot TOPO-ÂNCORA (§2.4, fórmula 3:
+    /// topo do slot + 3·N se a linha tem acento; senão o próprio topo do slot).</summary>
+    public int TopoBaseNoSlot(string texto, int escala, int topoSlot)
+        => topoSlot + (TemAcento(texto) ? 3 * escala : 0);
+
+    /// <summary>Idem TopoBaseNoSlot, com o bloco (acento + base + ç) centrado
+    /// verticalmente no slot — regra dos botões/rótulos (tabs, facção, CTA).</summary>
+    public int TopoBaseCentradoNoSlot(string texto, int escala, int topoSlot, int alturaSlot)
+        => topoSlot + (alturaSlot - AlturaSlot(texto, escala)) / 2 + (TemAcento(texto) ? 3 * escala : 0);
+
+    /// <summary>A linha tem algum diacrítico que sobe acima da base?</summary>
+    public bool TemAcento(string texto) => texto.IndexOfAny(_comAcento) >= 0;
+
+    /// <summary>A linha tem cedilha (ç / Ç) que desce abaixo da base?</summary>
+    public bool TemCedilha(string texto)
+        => texto.IndexOfAny(['ç', 'Ç']) >= 0;
+
+    private static readonly char[] _comAcento =
+        ['à', 'á', 'â', 'ã', 'è', 'é', 'ê', 'í', 'ò', 'ó', 'ô', 'õ', 'ù', 'ú', 'ü',
+         'À', 'Á', 'Â', 'Ã', 'É', 'Ê', 'Í', 'Ó', 'Ô', 'Õ', 'Ú'];
+
     // ---------------------------------------------------------------- desenho
 
     /// <summary>
-    /// y informado = topo da BASE do glifo; acentos sobem acima dele (os slots
-    /// da UI deixam folga para isso). Caractere desconhecido vira '?'.
+    /// y informado = topo da BASE do glifo; acentos sobem acima dele e a
+    /// cedilha desce abaixo — por isso cada glifo desencaixa a partir da linha
+    /// que corresponde à base (glifos de 10/12 linhas têm recuo de 3 no topo).
+    /// Caractere desconhecido vira '?'.
     /// </summary>
     public void Desenhar(SpriteBatch lote, string texto, Point posicao, Color cor, int escala)
     {
-        var topoBase = posicao.Y - (AlturaComAcento - AlturaBase) * escala;
         for (int i = 0; i < texto.Length; i++)
         {
             char c = texto[i];
             if (c == ' ') continue;
-            if (!_glifos.TryGetValue(c, out var linhas)) c = '?';
-            linhas = _glifos[c];
+            if (!_glifos.TryGetValue(c, out var linhas))
+            {
+                c = '?';
+                linhas = _glifos[c];
+            }
 
             int xGlifo = posicao.X + i * Avanco * escala;
+            int recuoAcento = (linhas.Length - AlturaBase) * escala; // linhas acima da base
             for (int linha = 0; linha < linhas.Length; linha++)
             {
                 string r = linhas[linha];
                 for (int col = 0; col < LarguraGlifo; col++)
                 {
-                    if (r[col] != '#') continue;
+                    if (r[col] != 'X' && r[col] != '#') continue;
                     lote.Draw(_pixel,
-                        new Rectangle(xGlifo + col * escala, topoBase + linha * escala, escala, escala),
+                        new Rectangle(xGlifo + col * escala,
+                            posicao.Y - recuoAcento + linha * escala, escala, escala),
                         cor);
                 }
             }
@@ -213,6 +248,10 @@ public sealed class PixelFont
             var linhas = new List<string>(pares[i + 1].Split('/'));
             // garante altura fixa de 7 linhas (completa com linha vazia)
             while (linhas.Count < AlturaBase) linhas.Add(".....");
+            // e largura fixa de 5 colunas (linhas curtas viram vazio à direita)
+            for (int j = 0; j < linhas.Count; j++)
+                linhas[j] = linhas[j].Length < LarguraGlifo
+                    ? linhas[j].PadRight(LarguraGlifo, '.') : linhas[j];
             _glifos[chave] = linhas.ToArray();
         }
     }

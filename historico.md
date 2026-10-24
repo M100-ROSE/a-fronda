@@ -735,6 +735,83 @@ Pendências:
 
 ---
 
+### 2026-10-23 — Tela de login legível: bug da fonte invisível corrigido + spec de legibilidade implementada
+
+Solicitação: "melhore a tela de login, cadê as coisas escritas e tudo mais?".
+Diagnóstico do time: o texto **não renderizava** (bug real) e, por cima disso, a
+legibilidade era ruim. Executada em 3 fases (Day → Anna → Dakota).
+
+O que foi feito:
+
+1. **Day — spec atualizada** (`game/code/docs/design-tela-login.md`):
+   - Janela em **escala inteira ×2** (backbuffer lógico 960×540 desenhado em
+     1920×1080 via transform matrix; fallback sancionado ×1 = 960×540).
+   - Escalas de fonte por classe: título **5**, corpo/botões **3**,
+     subtítulo/rodapé **2** (escala 1 interditada nesta tela; sem escala
+     fracionária).
+   - Re-layout do painel: padding 24→16, fluxo vertical, tabs assimétricas
+     (128/192), facções 160×40 com insígnia no topo central, CTA 328×36, selo
+     de erro 328×28.
+   - Novos escritos: subtítulo "meia-noite: escolha o lado", rodapé
+     "tab navega - enter envia - esc volta", placeholders novos; checklist de
+     aceite atualizado (§2.2 re-layout, §2.4 contrato da fonte, §7 mensagens).
+2. **Anna — causa raiz do bug encontrada e corrigida (fonte invisível):**
+   - **Causa raiz:** `PixelFont.Desenhar`
+     (`game/code/src/Fronda.Client/Font/PixelFont.cs`) pintava somente pixels
+     `'#'`, mas **todos os glifos usam `'X'` como pixel sólido** — nenhum pixel
+     era desenhado e a fonte inteira era invisível. Corrigido para aceitar
+     `'X'` **ou** `'#'`.
+   - Helpers novos no `PixelFont`: `AlturaSlot`, `TopoBaseNoSlot`,
+     `TopoBaseCentradoNoSlot`, `TemAcento`, `TemCedilha`; a cedilha desce
+     2·N **abaixo** da base (contrato de encaixe documentado no cabeçalho).
+   - Implementação da spec de legibilidade:
+     - `Core/GameApp.cs` — janela 1920×1080 (inteiros), transform matrix ×2,
+       PointClamp, `PreferMultiSampling = false`, mouse ÷2 na entrega às
+       cenas, fallback ×1 sancionado quando a altura 1080 não couber.
+     - `UI/Label.cs`, `UI/Button.cs`, `UI/TextBox.cs` (escala 3, máscara `*`,
+       caret 2×21), `UI/ErrorBanner.cs`, `UI/LinkButton.cs`,
+       `UI/FactionButton.cs` (insígnia no topo central), `UI/BotaoCta.cs`.
+     - `Scenes/LoginScene.cs` — `Organizar()` reescrito conforme §2.2,
+       subtítulo, rodapé, placeholders novos, limiar de usuário 16,
+       mensagens de erro novas por §7 ("nome de 3 letras", "no mínimo 8",
+       "senhas não batem"), "escolha seu lado" em marfim.
+     - `Scenes/BemVindoScene.cs` — "...conectado ao mundo" em escala 3.
+   - Validação da Anna: `dotnet build` 0 erro/0 aviso; `dotnet test` 25/25
+     (`Fronda.Auth.Tests`); screenshot da janela real com todos os textos
+     legíveis.
+3. **Dakota — fechamento:** revisão do diff (12 arquivos, todos relacionados;
+   nenhum artefato de build no commit), `.gitignore` na raiz para a pasta
+   temporária de reprodução, esta entrada, commit e push.
+
+Arquivos alterados:
+
+- `game/code/docs/design-tela-login.md` — spec atualizada (janela ×2, escalas,
+  re-layout do painel, novos escritos, checklist de aceite)
+- `game/code/src/Fronda.Client/Font/PixelFont.cs` — correção do bug ('X'/'#'),
+  contrato de encaixe do pos.Y e helpers de slot/acento/cedilha
+- `game/code/src/Fronda.Client/Core/GameApp.cs` — janela 1920×1080, matrix ×2,
+  PointClamp, mouse ÷2, fallback ×1
+- `game/code/src/Fronda.Client/UI/Label.cs`, `Button.cs`, `TextBox.cs`,
+  `ErrorBanner.cs`, `LinkButton.cs`, `FactionButton.cs`, `BotaoCta.cs` —
+  escalas/medidas da spec de legibilidade
+- `game/code/src/Fronda.Client/Scenes/LoginScene.cs` — re-layout Organizar()
+  (§2.2), subtítulo, rodapé, placeholders, mensagens de erro novas (§7)
+- `game/code/src/Fronda.Client/Scenes/BemVindoScene.cs` — texto em escala 3
+- `.gitignore` — criado na raiz: ignora `repro-fonte/` (projeto temporário de
+  reprodução do bug da fonte, contém apenas `obj/` de build)
+
+Pendências:
+
+- [ ] `BemVindoScene` não foi validada ao vivo (exigiria criar uma conta real);
+      o código segue o §6.1 da spec.
+- [ ] Validar visualmente no monitor do usuário: rodar
+      `dotnet run --project game/code/src/Fronda.Client` e confirmar que a
+      tela de login mostra **todos** os textos.
+- [ ] Decidir o destino da pasta `repro-fonte/` (hoje ignorada pelo Git):
+      apagar quando não for mais útil ou guardar como teste de reprodução.
+
+---
+
 ## Modelo para novas entradas
 
 ```markdown

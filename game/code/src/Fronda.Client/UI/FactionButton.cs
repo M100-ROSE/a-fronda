@@ -10,12 +10,12 @@ namespace Fronda.UI;
 /// Botão de facção conforme a spec §3.3 (oposição, primário da tela: borda 2px
 /// vermelho permanente) e §3.4 (reino, escolha oposta: borda neutra 1px, a cor
 /// azul vive na insígnia 8×8 — pois borda azul sobre o painel dá só 1,7:1).
+/// Insígnia 8×8 cravada no TOPO CENTRAL do botão @ (76,2) rel.; hover/pressão
+/// preenche o pano do lado e a insígnia vira marfim (nunca some dentro dele).
 /// Regra anti-arco-íris: com um lado selecionado, o outro recua (borda neutra
 /// 1px Borda e identidade só na insígnia).
-/// Leva 3 (feedback de hover/foque): micro-nudge de 1px do lado escolhido
-/// (sem bounce) enquanto o outro recua 1px; filete inferior 2px intensificando
-/// o lado escolhido — Erro #7A1418 (2º degrau do pano vermelho, spec §3.3) na
-/// oposição e sombra embutida Fundo #120E10 no reino (idioma da spec §3.4).
+/// Leva 3 (feedback): micro-nudge de 1px do lado escolhido (sem bounce) e
+/// sombra embutida Fundo #120E10 no topo do reino pressionado (spec §3.4).
 /// </summary>
 public sealed class FactionButton : Button
 {
@@ -28,10 +28,8 @@ public sealed class FactionButton : Button
         _grupo = grupo;
     }
 
-    private Color Acento => Lado == LadoOposicao ? Palette.AcentoOposicao : Palette.AcentoReino;
-    private bool EhPrimario => Lado == LadoOposicao;
-
-    private static Lado LadoOposicao => Lado.Oposicao;
+    private Color Acento => Lado == Lado.Oposicao ? Palette.AcentoOposicao : Palette.AcentoReino;
+    private bool EhPrimario => Lado == Lado.Oposicao;
 
     private bool Selecionado => _grupo.Selecionado == Lado;
     private bool OutroEscolhido => _grupo.Selecionado.HasValue && _grupo.Selecionado.Value != Lado;
@@ -42,41 +40,26 @@ public sealed class FactionButton : Button
         var e = EstadoAtual;
         bool selecionado = Selecionado;
 
-        // ===== degraus por estado =====
-        Color fundo = Palette.Painel;
-        Color? borda = Palette.Borda;
-        int espessura = 1;
-        Color ins = Acento;
-        bool desce = false;
+        // ===== bandeiras por estado =====
+        Color? borda;
+        int espessura;
 
         if (e == Estado.Desabilitado)
         {
             borda = Palette.Borda;
-            ins = Palette.TextoMudo;
+            espessura = 1;
         }
-        else if (e == Estado.Pressionado)
+        else if (EhPrimario && !OutroEscolhido && e != Estado.Hover)
         {
-            fundo = EhPrimario ? Palette.Erro : Acento; // §3.3/§3.4 pressionado
+            // oposição em default OU selecionada (não recuado): borda 2px colorida
             borda = Acento;
-            desce = !EhPrimario; // reino desce 1px; oposição usa 2º degrau
-            ins = selecionado ? Palette.Texto : Acento; // §3.3: insígnia 8×8 Acento
-        }
-        else if (e == Estado.Hover || selecionado)
-        {
-            fundo = Acento; // preencher no hover = antecipação da escolha
-            borda = Acento;
-            ins = selecionado ? Palette.Texto : Acento;
+            espessura = 2;
         }
         else
         {
-            // estado padrão: primário tem borda 2px colorida; reino neutro.
-            // Recuo anti-arco-íris: se o OUTRO lado está escolhido, o primário
-            // perde a borda colorida e fica neutro.
-            if (EhPrimario && !OutroEscolhido)
-            {
-                borda = Acento;
-                espessura = 2;
-            }
+            // reino (e oposição recuada): borda neutra 1px Borda
+            borda = Palette.Borda;
+            espessura = 1;
         }
 
         var r = Limites;
@@ -88,30 +71,47 @@ public sealed class FactionButton : Button
             else if (OutroEscolhido) r.Offset(0, 1);
         }
         // pressionado do reino: desce 1px como sombra (§3.4, tem prioridade)
-        if (e == Estado.Pressionado && desce)
-            r.Offset(0, 1);
+        if (e == Estado.Pressionado && !EhPrimario) r.Offset(0, 1);
 
-        formas.RetanguloCheio(r, CapaSobrePainel(fundo));
+        // ===== pintura por estado =====
+        if (e == Estado.Desabilitado)
+        {
+            formas.RetanguloCheio(r, CapaSobrePainel(Palette.Painel));
+        }
+        else if (e == Estado.Pressionado)
+        {
+            // §3.3: oposição pressionada usa #7A1418 (2º degrau do pano vermelho);
+            // §3.4: reino pressionado preenche o azul e descE 1px
+            formas.RetanguloCheio(r, CapaSobrePainel(EhPrimario ? Palette.Erro : Acento));
+            if (!EhPrimario) // sombra embutida no topo (§3.4)
+                formas.Filete(r.X, r.Y, r.Width, 1, CapaSobrePainel(Palette.Fundo));
+        }
+        else if (e == Estado.Hover || selecionado)
+        {
+            // antecipação da escolha: pano do lado + insígnia marfim (§3.3/§3.4)
+            formas.RetanguloCheio(r, CapaSobrePainel(Acento));
+        }
+        else
+        {
+            formas.RetanguloCheio(r, CapaSobrePainel(Palette.Painel));
+        }
+
         if (borda is not null)
             formas.RetanguloContorno(r, espessura, CapaSobrePainel(borda.Value));
 
-        // filete intensificado do lado escolhido (leva 3): 2px na borda inferior
-        if (selecionado && e != Estado.Desabilitado)
-            formas.Filete(r.X, r.Bottom - 2, r.Width, 2,
-                CapaSobrePainel(EhPrimario ? Palette.Erro : Palette.Fundo));
-
-        // grupo centrado: insígnia 8×8 + gap 6 + rótulo
-        int larguraTexto = fonte.LarguraTexto(Texto, Escala);
-        int conteudo = 8 + 6 + larguraTexto;
-        int x = r.X + (r.Width - conteudo) / 2;
-        int yInsignia = r.Y + (r.Height - 8) / 2;
-
+        // rótulo centrado (pos.Y = 365 num botão de 40 — reserva do ç, §2.2)
         var tamanhoTexto = fonte.MedirTexto(Texto, Escala);
         fonte.Desenhar(lote, Texto, new Point(
-            x + 8 + 6,
-            r.Y + (r.Height - tamanhoTexto.Y) / 2), CapaSobrePainel(Palette.Texto), Escala);
+            r.X + (r.Width - tamanhoTexto.X) / 2,
+            fonte.TopoBaseCentradoNoSlot(Texto, Escala, r.Y, r.Height)),
+            CapaSobrePainel(e == Estado.Desabilitado ? Palette.TextoMudo : Palette.Texto), Escala);
 
-        formas.RetanguloCheio(new Rectangle(x, yInsignia, 8, 8), CapaSobrePainel(ins));
+        // insígnia 8×8 no topo central @ (76,2) rel. (§3.3/§3.4)
+        Color corInsignia = e == Estado.Desabilitado ? Palette.TextoMudo
+            : e == Estado.Normal && !selecionado ? Acento
+            : Palette.Texto; // hover/pressionado/selecionado: marfim, nunca some
+        formas.RetanguloCheio(new Rectangle(r.X + (r.Width - 8) / 2, r.Y + 2, 8, 8),
+            CapaSobrePainel(corInsignia));
 
         if (Focado) DesenharContornoFoco(formas);
     }

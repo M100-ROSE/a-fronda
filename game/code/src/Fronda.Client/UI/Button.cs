@@ -14,7 +14,7 @@ namespace Fronda.UI;
 public abstract class Button : Widget
 {
     public string Texto = "";
-    public int Escala = 2;
+    public int Escala = 3; // corpo/botões da tela: escala 3 (spec §2.4)
     public Action? AoClicar;
 
     /// <summary>Mouse desceu sobre o botão e ainda não subiu.</summary>
@@ -82,7 +82,8 @@ public abstract class Button : Widget
         var tamanho = fonte.MedirTexto(Texto, Escala);
         fonte.Desenhar(lote, Texto, new Point(
             r.X + (r.Width - tamanho.X) / 2,
-            r.Y + (r.Height - tamanho.Y) / 2), CapaSobrePainel(CorTexto(e)), Escala);
+            fonte.TopoBaseCentradoNoSlot(Texto, Escala, r.Y, r.Height)),
+            CapaSobrePainel(CorTexto(e)), Escala);
 
         if (Focado) DesenharContornoFoco(formas);
         Extra(lote, formas, fonte, r, e);

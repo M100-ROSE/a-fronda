@@ -48,9 +48,9 @@ public sealed class BemVindoScene : Scene
         // tudo dissolve da noite: as cores misturam para o Fundo em degraus
         Color capa(Color cor) => Palette.DissolverPara(cor, Palette.Fundo, _degrau);
 
-        var titulo = "…conectado ao mundo";
-        var t = fonte.MedirTexto(titulo, 2);
-        fonte.Desenhar(lote, titulo, new Point(480 - t.X / 2, 216), capa(Palette.Texto), 2);
+        var titulo = "...conectado ao mundo"; // três glifos "." (§6.1: "…" é só leva 3)
+        fonte.Desenhar(lote, titulo, new Point(480 - fonte.LarguraTexto(titulo, 3) / 2, 216),
+            capa(Palette.Texto), 3); // escala 3: 21px de altura, largura 378px
 
         // filete Ouro 1px × 120px central (§6.1)
         formas.Filete(420, 246, 120, 1, capa(Palette.Ouro));
